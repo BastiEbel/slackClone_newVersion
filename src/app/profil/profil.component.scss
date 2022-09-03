@@ -1,0 +1,22 @@
+.profile-pic {
+    width: 200px;
+    height: 200px;
+}
+.edit-container {
+    display: flex;
+    justify-content: center;
+}
+
+img {
+    margin-right: 24px;
+}
+
+input {
+    height: 20px;
+}
+
+.mat-form-field-appearance-outline {
+    .mat-form-field-infix {
+        padding: unset !important;
+    }
+}

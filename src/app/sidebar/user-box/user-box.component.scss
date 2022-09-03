@@ -1,0 +1,42 @@
+.menuUserContainerOuter {
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 16px;
+
+  .menuUserContainerInner {
+    display: flex;
+    justify-content: space-between;
+
+    .left {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .list {
+    display: flex;
+
+    .left {
+      height: 20px;
+      padding-right: 12px;
+    }
+  }
+}
+
+.user-box {
+  display: flex;
+  justify-content: flex-start;
+  height: 30px;
+  width: 100%;
+  &:hover {
+    background-color: rgba(211, 211, 211, 0.377);
+    border-radius: 6px;
+    transform: scale(1.05);
+  }
+}
+.profile-pic {
+  height: 20px;
+  width: 20px;
+  object-fit: cover;
+  margin-left: 16px;
+}

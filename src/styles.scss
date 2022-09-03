@@ -1,1 +1,64 @@
-/* You can add global styles to this file, and also import other style files */
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.d-none {
+  display: none;
+}
+
+.mr-8 {
+  margin-right: 8px;
+}
+
+.mr-16 {
+  margin-right: 16px;
+}
+
+.mb-12 {
+  margin-bottom: 12px;
+}
+
+.mt-32 {
+  margin-top: 32px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.mat-standard-chip {
+  padding: 0.5em 0.85em;
+  min-height: 2.5em;
+}
+
+.material-icons {
+  font-size: 24px;
+  font-family: "Material Icons", "Material Icons";
+
+  .mat-badge-content {
+    font-family: "Roboto";
+  }
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}

@@ -1,0 +1,48 @@
+<mat-drawer-container class="mat-drawer-container">
+  <mat-drawer #drawer class="sidenav-mat-drawer" mode="side" [opened]="true">
+    <app-sidebar></app-sidebar>
+  </mat-drawer>
+  <mat-drawer-content>
+    <mat-toolbar color="primary" class="header-container">
+      <mat-toolbar-row class="header-content">
+        <div class="header-left">
+          <mat-icon (click)="drawer.toggle()" class="menu-icon">menu</mat-icon>
+          <img class="header-logo" src="assets/favicons/favicon-96x96.png" />
+          <span>Slack-Clone</span>
+        </div>
+
+        <div>
+          <ng-container
+            *ngIf="authService.currentUser$ | async as user; else loginButton"
+          >
+            <button mat-button target="_blank" [matMenuTriggerFor]="userMenu">
+              <mat-icon matSuffix>account_circle</mat-icon>
+              {{ user.displayName }}
+              <mat-icon>expand_more</mat-icon>
+            </button>
+          </ng-container>
+          <ng-template #loginButton>
+            <a mat-button target="_blank" class="header-right">
+              <mat-icon matSuffix>login</mat-icon>
+            </a>
+          </ng-template>
+        </div>
+      </mat-toolbar-row>
+      <mat-menu #userMenu="matMenu">
+        <button mat-menu-item (click)="logOut()">Logout</button>
+        <button mat-menu-item (click)="openDialog()">Profil</button>
+      </mat-menu>
+    </mat-toolbar>
+
+    <app-main></app-main>
+  </mat-drawer-content>
+  <mat-drawer
+    #thread
+    class="sidenav-mat-drawer"
+    mode="side"
+    position="end"
+    [opened]="threadService.opened"
+  >
+    <!-- <app-threat-bar></app-threat-bar> -->
+  </mat-drawer>
+</mat-drawer-container>
