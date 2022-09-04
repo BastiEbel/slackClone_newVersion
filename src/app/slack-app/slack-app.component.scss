@@ -24,17 +24,9 @@
     margin: 10px;
 }
 
-.profil-open {
-    border: 1px solid white;
-    border-radius: 8px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-left: 15px;
-    padding-right: 15px;
-    &:hover {
-        cursor: pointer;
-        background-color: rgba(38, 38, 255, 0.363);
-    }
+.profile-img-toolbar {
+    border-radius: 100%;
+    margin-right: 8px;
 }
 
 .mat-drawer-content {

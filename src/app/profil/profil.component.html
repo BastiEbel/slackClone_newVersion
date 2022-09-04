@@ -1,98 +1,26 @@
 <div class="dialog-container">
-  <!-- <mat-progress-bar
-    *ngIf="profilService.loading"
-    mode="indeterminate"
-  ></mat-progress-bar>
-  <h1 mat-dialog-title>Profil {{ authService.user.userName }}</h1>
-  <div class="edit-container" mat-dialog-content>
-    <img class="profile-pic" src="./assets/img/profile_Pic_gray.png" />
-    <div>
-      <div>
-        <mat-form-field class="mr-16" appearance="outline">
-          <mat-label>{{ profilService.user.firstName }}</mat-label>
-          <input
-            [disabled]="profilService.loading"
-            [(ngModel)]="authService.user.firstName"
-            matInput
-            placeholder="{{ authService.user.firstName }}"
-          />
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>{{ profilService.user.lastName }}</mat-label>
-          <input
-            [disabled]="profilService.loading"
-            [(ngModel)]="authService.user.lastName"
-            matInput
-            placeholder="{{ profilService.user.lastName }}"
-          />
-        </mat-form-field>
-      </div>
-
-      <div>
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>{{ authService.user.userName }}</mat-label>
-          <input
-            [disabled]="profilService.loading"
-            matInput
-            placeholder="{{ authService.user.userName }}"
-          />
-        </mat-form-field>
-      </div>
-
-      <div>
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>{{ authService.user.email }}</mat-label>
-          <input
-            [disabled]="profilService.loading"
-            matInput
-            placeholder="{{ authService.user.email }}"
-          />
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>{{ profilService.user.street }}</mat-label>
-          <input
-            [disabled]="profilService.loading"
-            [(ngModel)]="authService.user.street"
-            matInput
-            placeholder="{{ profilService.user.street }}"
-          />
-        </mat-form-field>
-      </div>
-
-      <div>
-        <mat-form-field class="mr-16" appearance="outline">
-          <mat-label>{{ profilService.user.zipCode }}</mat-label>
-          <input
-            [disabled]="profilService.loading"
-            [(ngModel)]="authService.user.zipCode"
-            matInput
-            placeholder="{{ profilService.user.zipCode }}"
-          />
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>{{ profilService.user.city }}</mat-label>
-          <input
-            [disabled]="profilService.loading"
-            [(ngModel)]="authService.user.city"
-            matInput
-            placeholder="{{ profilService.user.city }}"
-          />
-        </mat-form-field>
-      </div>
+  <div
+    class="form-container mat-elevation-z5 text-center"
+    *ngIf="user$ | async as user"
+  >
+    <h1>User Profile</h1>
+    <div class="profile-img">
+      <img
+        width="120px"
+        height="120px"
+        [src]="user.photoURL ?? 'assets/img/profile_Pic_gray.png'"
+      />
+      <button mat-mini-fab (click)="inputField.click()"></button>
     </div>
-  </div> -->
+    <input
+      type="file"
+      hidden
+      #inputField
+      (change)="uploadImage($event, user)"
+    />
+  </div>
   <div mat-dialog-actions>
-    <button
-      [disabled]="profilService.loading"
-      mat-button
-      (click)="dialogRef.close()"
-    >
-      Cancel
-    </button>
-    <button [disabled]="profilService.loading" mat-button (click)="saveUser()">
-      Save
-    </button>
+    <button mat-button (click)="dialogRef.close()">Cancel</button>
+    <button mat-button>Save</button>
   </div>
 </div>

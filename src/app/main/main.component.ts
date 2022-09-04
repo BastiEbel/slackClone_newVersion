@@ -7,7 +7,7 @@ import { Message } from 'src/models/message.class';
 import { ChannelService } from '../services/channel.service';
 
 import { ThreadService } from '../services/thread.service';
-import { User } from 'src/models/user.class';
+import { User } from 'src/models/user';
 import { AuthService } from '../services/auth.service';
 
 import { getDownloadURL, getStorage, ref } from '@angular/fire/storage';

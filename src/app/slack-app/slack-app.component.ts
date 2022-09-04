@@ -8,7 +8,7 @@ import {
 import { MatDrawer } from '@angular/material/sidenav';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { User } from 'src/models/user.class';
+import { User } from 'src/models/user';
 import { AuthService } from '../services/auth.service';
 import { ThreadService } from '../services/thread.service';
 import { ProfilComponent } from '../profil/profil.component';
@@ -21,7 +21,6 @@ import { ProfilServiceService } from '../services/profil-service.service';
 })
 export class SlackAppComponent implements OnInit, AfterViewInit {
   userId = '';
-  user: User = new User();
   user$ = this.authService.currentUser$;
 
   @ViewChild('thread') thread: MatDrawer;

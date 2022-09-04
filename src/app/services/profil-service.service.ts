@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { BehaviorSubject } from 'rxjs';
-import { User } from 'src/models/user.class';
+import { User } from 'src/models/user';
 import { AuthService } from './auth.service';
 
 @Injectable({

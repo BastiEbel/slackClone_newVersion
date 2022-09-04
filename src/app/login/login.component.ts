@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
 import { doc } from 'firebase/firestore';
 import { Observable } from 'rxjs';
-import { User } from 'src/models/user.class';
+import { User } from 'src/models/user';
 import { AuthService } from '../services/auth.service';
 
 export function passwordsMatchValidator(): ValidatorFn {

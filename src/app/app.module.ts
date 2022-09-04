@@ -45,6 +45,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { HotToastModule } from '@ngneat/hot-toast';
+import { ProfilComponent } from './profil/profil.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { HotToastModule } from '@ngneat/hot-toast';
     LoginComponent,
     SlackAppComponent,
     DialogAddChannelComponent,
+    ProfilComponent,
   ],
   imports: [
     BrowserModule,

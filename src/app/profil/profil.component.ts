@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatDialogRef } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { HotToastService } from '@ngneat/hot-toast';
+import { User } from 'firebase/auth';
+import { concatMap } from 'rxjs';
 import { AuthService } from '../services/auth.service';
+import { ImageUploadService } from '../services/image-upload.service';
 import { ProfilServiceService } from '../services/profil-service.service';
 
 @Component({
@@ -11,23 +13,30 @@ import { ProfilServiceService } from '../services/profil-service.service';
   styleUrls: ['./profil.component.scss'],
 })
 export class ProfilComponent implements OnInit {
-  userId: string = '';
+  user$ = this.authService.currentUser$;
   constructor(
     public dialogRef: MatDialogRef<any>,
-    public profilService: ProfilServiceService,
-    public firestore: AngularFirestore,
-    private route: ActivatedRoute,
-    public authService: AuthService
+    private imageUploadService: ImageUploadService,
+    private profilService: ProfilServiceService,
+    private toast: HotToastService,
+    private authService: AuthService
   ) {}
 
-  ngOnInit(): void {
-    /* this.authService.getUser(this.userId); */
-    this.userId = this.profilService.users;
-    console.log(this.userId);
-  }
+  ngOnInit(): void {}
 
-  saveUser() {
-    this.profilService.saveUserService();
-    this.dialogRef.close();
+  uploadImage(event: any, user: User) {
+    this.imageUploadService
+      .uploadImage(event.target.files[0], `${user.uid}`)
+      .pipe(
+        this.toast.observe({
+          loading: 'Image is being uploaded...',
+          success: 'Image uploaded!',
+          error: 'There was an error in uploading',
+        }),
+        concatMap((photoURL) =>
+          this.authService.updateProfileData({ photoURL })
+        )
+      )
+      .subscribe();
   }
 }

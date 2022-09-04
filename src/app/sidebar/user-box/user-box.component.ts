@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { User } from 'src/models/user.class';
+import { User } from 'src/models/user';
 
 @Component({
   selector: 'app-user-box',
   templateUrl: './user-box.component.html',
-  styleUrls: ['./user-box.component.scss']
+  styleUrls: ['./user-box.component.scss'],
 })
 export class UserBoxComponent implements OnInit {
   user = new User();
   dropdown = true;
   allUsers = [];
 
-  constructor(private firestore: AngularFirestore) { }
+  constructor(private firestore: AngularFirestore) {}
 
   ngOnInit(): void {
     this.firestore
@@ -24,11 +24,10 @@ export class UserBoxComponent implements OnInit {
   }
 
   openUser(i) {
-    console.log("User ID is ", this.allUsers[i]['customIdName']);
+    console.log('User ID is ', this.allUsers[i]['customIdName']);
   }
 
   seeDropdown() {
     this.dropdown = !this.dropdown;
   }
-
 }

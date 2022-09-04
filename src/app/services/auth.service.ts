@@ -1,17 +1,16 @@
 import { Injectable } from '@angular/core';
-import { Auth, authState } from '@angular/fire/auth';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
-import { HotToastService } from '@ngneat/hot-toast';
 import {
+  Auth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   updateProfile,
-} from 'firebase/auth';
-import { from, Observable, switchMap } from 'rxjs';
-import { User } from 'src/models/user.class';
+  UserInfo,
+  authState,
+} from '@angular/fire/auth';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { concatMap, from, Observable, of, switchMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -27,48 +26,17 @@ export class AuthService {
     public _auth: Auth,
     public router: Router,
     public firestore: AngularFirestore,
-    public msg: MatSnackBar,
-    public auth: AngularFireAuth,
-    private toast: HotToastService
+    public msg: MatSnackBar
   ) {}
 
   /**
    *
    * login function
-   * @param userNames parameter for the username
+   * @param email parameter for the email
    * @param password parameter for the password
    */
   signInUser(email: string, password: string): Observable<any> {
     return from(signInWithEmailAndPassword(this._auth, email, password));
-    /* this.firestore
-      .collection('users')
-      .valueChanges({ idField: 'id' }) */
-    /* .subscribe((result) => {
-        for (let i = 0; i < result.length; i++) {
-          try {
-            if (
-              result[i]['userName'] === userNames &&
-              result[i]['password'] === password
-            ) {
-              this.login = true;
-              this.message = 'Logout';
-              this.router.navigateByUrl(`/slack/${result[i]['id']}`);
-            } else {
-              this.msg.open(
-                'User not found! Register please or Enter right Name or Password',
-                'Close'
-              );
-            }
-          } catch (err) {
-            if (err) {
-              this.msg.open(
-                'User not found! Register please or Enter right Name or Password',
-                'Close'
-              );
-            }
-          }
-        }
-      }); */
   }
 
   /**
@@ -81,6 +49,16 @@ export class AuthService {
     return from(
       createUserWithEmailAndPassword(this._auth, email, password)
     ).pipe(switchMap(({ user }) => updateProfile(user, { displayName: name })));
+  }
+
+  updateProfileData(profileData: Partial<UserInfo>): Observable<any> {
+    const user = this._auth.currentUser;
+    return of(user).pipe(
+      concatMap((user) => {
+        if (!user) throw new Error('Not Authenticated');
+        return updateProfile(user, profileData);
+      })
+    );
   }
 
   logout() {
@@ -105,21 +83,4 @@ export class AuthService {
         }
       });
   }
-
-  /**
-   *
-   * @param userId userId for the Slack Component you can show the username
-   */
-  /* getUser(userId) {
-    if (userId) {
-      this.firestore
-        .collection('users')
-        .doc(userId)
-        .valueChanges()
-        .subscribe((user: any) => {
-          this.user = new User(user);
-          console.log(this.user);
-        });
-    }
-  } */
 }
