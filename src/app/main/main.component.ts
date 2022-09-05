@@ -31,7 +31,6 @@ export class MainComponent implements OnInit {
   questions = [];
   show = false;
   newMessage = new Message();
-  user: User = new User();
 
   constructor(
     private uploadService: FileUploadService,

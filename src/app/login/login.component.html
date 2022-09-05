@@ -51,7 +51,7 @@
             <button mat-flat-button color="primary" (click)="onSignIn()">
               Login
             </button>
-            <a (click)="loginGuest()">Login as Guest</a>
+            <a>Login as Guest</a>
           </mat-card-actions>
         </form>
       </mat-tab>
@@ -68,7 +68,7 @@
             <mat-icon class="mr-8" matSuffix>mode_edit</mat-icon>
             <mat-error
               *ngIf="
-                userName?.errors?.['required']
+                name?.errors?.['required']
               "
             >
               Please enter a valid Username

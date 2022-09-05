@@ -1,28 +1,46 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { HotToastService } from '@ngneat/hot-toast';
-import { User } from 'firebase/auth';
+
 import { concatMap } from 'rxjs';
-import { AuthService } from '../services/auth.service';
 import { ImageUploadService } from '../services/image-upload.service';
 import { ProfilServiceService } from '../services/profil-service.service';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { User } from 'src/models/user';
 
+@UntilDestroy()
 @Component({
   selector: 'app-profil',
   templateUrl: './profil.component.html',
   styleUrls: ['./profil.component.scss'],
 })
 export class ProfilComponent implements OnInit {
-  user$ = this.authService.currentUser$;
+  user$ = this.profilService.currentUserProfile$;
+
+  profileForm = new FormGroup({
+    uid: new FormControl(''),
+    displayName: new FormControl(''),
+    firstName: new FormControl(''),
+    lastName: new FormControl(''),
+    street: new FormControl(''),
+    zipCode: new FormControl(''),
+    city: new FormControl(''),
+  });
   constructor(
     public dialogRef: MatDialogRef<any>,
     private imageUploadService: ImageUploadService,
     private profilService: ProfilServiceService,
-    private toast: HotToastService,
-    private authService: AuthService
+    private toast: HotToastService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.profilService.currentUserProfile$
+      .pipe(untilDestroyed(this))
+      .subscribe((user) => {
+        this.profileForm.patchValue({ ...user });
+      });
+  }
 
   uploadImage(event: any, user: User) {
     this.imageUploadService
@@ -34,9 +52,25 @@ export class ProfilComponent implements OnInit {
           error: 'There was an error in uploading',
         }),
         concatMap((photoURL) =>
-          this.authService.updateProfileData({ photoURL })
+          this.profilService.updateUser({ uid: user.uid, photoURL })
         )
       )
       .subscribe();
+  }
+
+  saveProfile() {
+    const profileData = this.profileForm.value;
+    this.profilService
+      .updateUser(profileData)
+      .pipe(
+        this.toast.observe({
+          loading: 'Updating data...',
+          success: 'Data has been updated',
+          error: 'There was an error in updating the data',
+        })
+      )
+      .subscribe(() => {
+        this.dialogRef.close();
+      });
   }
 }

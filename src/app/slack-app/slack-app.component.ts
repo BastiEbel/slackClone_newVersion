@@ -21,16 +21,16 @@ import { ProfilServiceService } from '../services/profil-service.service';
 })
 export class SlackAppComponent implements OnInit, AfterViewInit {
   userId = '';
-  user$ = this.authService.currentUser$;
+  user$ = this.profilService.currentUserProfile$;
 
   @ViewChild('thread') thread: MatDrawer;
 
   constructor(
     public authService: AuthService,
     private router: Router,
-    private route: ActivatedRoute,
     public threadService: ThreadService,
     public profilService: ProfilServiceService,
+    private route: ActivatedRoute,
     public el: ElementRef,
     public dialog: MatDialog
   ) {}
@@ -43,12 +43,10 @@ export class SlackAppComponent implements OnInit, AfterViewInit {
     if (!this.authService.login) {
       this.router.navigateByUrl('/login');
     }
-    /* this.route.paramMap.subscribe((paramMap) => {
+    this.route.paramMap.subscribe((paramMap) => {
       this.userId = paramMap.get('id');
-      this.authService.getUser(this.userId);
-      //console.log(this.userId);
-      this.profilService.users = this.userId;
-    }); */
+      this.authService.currentUser$;
+    });
   }
 
   openDialog(): void {

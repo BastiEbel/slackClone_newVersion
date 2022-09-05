@@ -4,19 +4,18 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   updateProfile,
-  UserInfo,
   authState,
 } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { concatMap, from, Observable, of, switchMap } from 'rxjs';
+import { concatMap, from, Observable, of } from 'rxjs';
+import { User } from 'src/models/user';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  //user = new User();
   message: string = 'Login';
   guest: string = 'Guest';
   login = true; //TODO auf false setzen bevor ich deploy
@@ -45,13 +44,11 @@ export class AuthService {
    * @param password for the password
    * @returns that will be return
    */
-  signUp(email: string, password: string, name: string) {
-    return from(
-      createUserWithEmailAndPassword(this._auth, email, password)
-    ).pipe(switchMap(({ user }) => updateProfile(user, { displayName: name })));
+  signUp(email: string, password: string) {
+    return from(createUserWithEmailAndPassword(this._auth, email, password));
   }
 
-  updateProfileData(profileData: Partial<UserInfo>): Observable<any> {
+  updateProfileData(profileData: Partial<User>): Observable<any> {
     const user = this._auth.currentUser;
     return of(user).pipe(
       concatMap((user) => {
@@ -69,18 +66,34 @@ export class AuthService {
    * user can login as a guest
    *
    */
-  guestLogin() {
+  /* guestLogin() {
     this.firestore
       .collection('users')
       .valueChanges({ idField: 'id' })
       .subscribe((result) => {
         for (let i = 0; i < result.length; i++) {
-          if (result[i]['userName'] == this.guest) {
+          if (result[i]['name'] == this.guest) {
             this.login = true;
             this.message = 'Logout';
             this.router.navigateByUrl(`/slack/${result[i]['id']}`);
           }
         }
       });
-  }
+  } */
+
+  /**
+   *
+   * @param userId userId for the Slack Component you can show the username
+   */
+  /* getUser(userId) {
+    if (userId) {
+      this.firestore
+        .collection('users')
+        .doc(userId)
+        .valueChanges()
+        .subscribe((user: any) => {
+          this.users = new User(user);
+        });
+    }
+  } */
 }

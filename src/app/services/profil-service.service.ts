@@ -1,6 +1,12 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { BehaviorSubject } from 'rxjs';
+import {
+  doc,
+  docData,
+  Firestore,
+  setDoc,
+  updateDoc,
+} from '@angular/fire/firestore';
+import { from, Observable, of, switchMap } from 'rxjs';
 import { User } from 'src/models/user';
 import { AuthService } from './auth.service';
 
@@ -8,29 +14,28 @@ import { AuthService } from './auth.service';
   providedIn: 'root',
 })
 export class ProfilServiceService {
-  loading = false;
-  user = new User();
-  userId: string = '';
-  public profilData$: BehaviorSubject<any> = new BehaviorSubject('');
-  users;
+  get currentUserProfile$(): Observable<User | null> {
+    return this.authService.currentUser$.pipe(
+      switchMap((user) => {
+        if (!user?.uid) {
+          return of(null);
+        }
 
-  constructor(
-    private firestore: AngularFirestore,
-    public authService: AuthService
-  ) {}
+        const ref = doc(this.firestore, 'users', user?.uid);
+        return docData(ref) as Observable<User>;
+      })
+    );
+  }
 
-  saveUserService() {
-    this.loading = true;
-    console.log(this.users);
+  constructor(private firestore: Firestore, private authService: AuthService) {}
 
-    /* if (this.users) {
-      this.firestore
-        .collection('users')
-        .doc(this.users)
-        .update(this.user.toJSON())
-        .then(() => {
-          this.loading = false;
-        });
-    } */
+  addUser(user: User): Observable<any> {
+    const ref = doc(this.firestore, 'users', user.uid);
+    return from(setDoc(ref, user));
+  }
+
+  updateUser(user: User): Observable<any> {
+    const ref = doc(this.firestore, 'users', user.uid);
+    return from(updateDoc(ref, { ...user }));
   }
 }

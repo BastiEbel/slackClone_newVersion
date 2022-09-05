@@ -12,9 +12,7 @@
         </div>
 
         <div>
-          <ng-container
-            *ngIf="authService.currentUser$ | async as user; else loginButton"
-          >
+          <ng-container *ngIf="user$ | async as user; else loginButton">
             <button mat-button target="_blank" [matMenuTriggerFor]="userMenu">
               <img
                 class="profile-img-toolbar"
@@ -34,8 +32,17 @@
         </div>
       </mat-toolbar-row>
       <mat-menu #userMenu="matMenu">
-        <button mat-menu-item (click)="logOut()">Logout</button>
-        <button mat-menu-item (click)="openDialog()">Profil</button>
+        <button
+          mat-menu-item
+          routerLink="/login"
+          (click)="authService.logout()"
+        >
+          <mat-icon class="menu-icon" matSuffix>logout</mat-icon>
+          Logout
+        </button>
+        <button mat-menu-item (click)="openDialog()">
+          <mat-icon class="menu-icon" matSuffix>account_circle</mat-icon> Profil
+        </button>
       </mat-menu>
     </mat-toolbar>
 

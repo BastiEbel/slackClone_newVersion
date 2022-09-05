@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { map } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
+import { ProfilServiceService } from 'src/app/services/profil-service.service';
 import { User } from 'src/models/user';
 
 @Component({
@@ -8,11 +11,15 @@ import { User } from 'src/models/user';
   styleUrls: ['./user-box.component.scss'],
 })
 export class UserBoxComponent implements OnInit {
-  user = new User();
+  user = this.profilService.currentUserProfile$;
   dropdown = true;
   allUsers = [];
 
-  constructor(private firestore: AngularFirestore) {}
+  constructor(
+    private firestore: AngularFirestore,
+    public authService: AuthService,
+    public profilService: ProfilServiceService
+  ) {}
 
   ngOnInit(): void {
     this.firestore
@@ -21,6 +28,10 @@ export class UserBoxComponent implements OnInit {
       .subscribe((changes: any) => {
         this.allUsers = changes;
       });
+
+    /* this.authService.currentUser$
+      .pipe(map((t) => t.displayName))
+      .subscribe((names) => (this.allUsers = names)); */
   }
 
   openUser(i) {
