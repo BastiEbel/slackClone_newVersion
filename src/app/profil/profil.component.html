@@ -1,5 +1,7 @@
 <div class="dialog-container">
+  <mat-icon class="close" (click)="dialogRef.close()">close</mat-icon>
   <h1>User Profile</h1>
+
   <div class="profile-img" *ngIf="user$ | async as user">
     <div class="profile-img">
       <img
@@ -76,15 +78,6 @@
         color="primary"
       >
         Save
-      </button>
-      <button
-        style="margin-left: 16px"
-        mat-button
-        mat-raised-button
-        color="primary"
-        (click)="dialogRef.close()"
-      >
-        Cancel
       </button>
     </div>
   </form>

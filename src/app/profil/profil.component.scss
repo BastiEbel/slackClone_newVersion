@@ -23,6 +23,15 @@
     align-items: center;
     flex-direction: column;
 }
+.close {
+    position: absolute;
+    right: 380px;
+    top: 150px;
+    &:hover {
+        cursor: pointer;
+        transform: scale(1.2);
+    }
+}
 .mat-mini-fab {
     background-color: #3f51b5;
 }
