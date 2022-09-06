@@ -140,6 +140,7 @@ export class MainComponent implements OnInit {
         question: this.newMessage.question,
         downloads: this.downloadURL || null,
         user: this.user.displayName,
+        photoURL: this.user.photoURL,
       });
   }
 

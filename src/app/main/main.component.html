@@ -12,11 +12,11 @@
             <div class="message-user-container">
               <img
                 class="message-user-pic"
-                [src]="user.photoURL ?? 'assets/img/profile_Pic_gray.png'"
+                [src]="message.photoURL ?? 'assets/img/profile_Pic_gray.png'"
                 alt="Pic"
               />
               <div class="message-user-name">
-                {{ user.displayName }}
+                {{ message.user }}
               </div>
               <div class="message-time" *ngIf="message['uploadTime']">
                 {{ uploadTimeToMessageTime(message["uploadTime"]) }}
