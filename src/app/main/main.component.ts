@@ -13,6 +13,7 @@ import { AuthService } from '../services/auth.service';
 import { getDownloadURL, getStorage, ref } from '@angular/fire/storage';
 import { ResizableDirective } from '../resizable.directive';
 import { ChatServiceService } from '../services/chat-service.service';
+import { ProfilServiceService } from '../services/profil-service.service';
 
 @Component({
   selector: 'app-main',
@@ -31,11 +32,12 @@ export class MainComponent implements OnInit {
   questions = [];
   show = false;
   newMessage = new Message();
+  user: any = [];
 
   constructor(
     private uploadService: FileUploadService,
     private fileList: FileUploadService, //?????????
-    private authService: AuthService,
+    private profileService: ProfilServiceService,
     public firestore: AngularFirestore,
     public channelService: ChannelService,
     public threadService: ThreadService,
@@ -44,6 +46,7 @@ export class MainComponent implements OnInit {
 
   ngOnInit(): void {
     this.getChannel();
+    this.getUser();
   }
 
   /**
@@ -136,8 +139,15 @@ export class MainComponent implements OnInit {
         uploadTime: actualTime,
         question: this.newMessage.question,
         downloads: this.downloadURL || null,
-        /* user: this.authService.user.userName, */
+        user: this.user.displayName,
       });
+  }
+
+  getUser() {
+    this.profileService.currentUserProfile$.subscribe((result) => {
+      this.user = result;
+      console.log(this.user);
+    });
   }
 
   /**

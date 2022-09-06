@@ -148,7 +148,7 @@ export class LoginComponent implements OnInit {
         })
       )
       .subscribe(() => {
-        this.router.navigate(['/slack/:id']);
+        this.router.navigate([`/slack/:id`]);
       });
   }
 

@@ -1,10 +1,8 @@
 <div class="header">
   <div class="headline">
-    <div>
-      Thread
-    </div>
+    <div>Thread</div>
     <div class="headline-small">
-      {{ channel['channelTitle'] }}
+      {{ channel["channelTitle"] }}
     </div>
   </div>
   <button mat-icon-button (click)="closeThread()">
@@ -12,22 +10,28 @@
   </button>
 </div>
 
-
 <mat-toolbar class="message-section">
-
   <div class="thread-container">
     <div class="mb-12 question-container">
       <div class="thread-user-container">
-        <img class="thread-user-pic" src="./assets/img/profile_Pic_gray.png" alt="Pic">
+        <img
+          class="thread-user-pic"
+          src="./assets/img/profile_Pic_gray.png"
+          alt="Pic"
+        />
         <div class="thrad-user-name">
-          {{ threadService.question.user }}
+          <!-- {{ threadService.question.user }} -->
         </div>
       </div>
       <mat-card class="mat-card-thread mat-card-thread-question">
         <div class="card-thread-container">
           <div *ngIf="question['downloads']">
-            <a class="anhang-link" href="{{question['downloads']}}" target="_blank">
-              <img src="{{question['downloads']}}">
+            <a
+              class="anhang-link"
+              href="{{ question['downloads'] }}"
+              target="_blank"
+            >
+              <img src="{{ question['downloads'] }}" />
             </a>
           </div>
           <div class="thread">
@@ -37,9 +41,16 @@
       </mat-card>
     </div>
 
-    <div class="mb-12" *ngFor="let answerMessage of answerMessages; let i = index;">
+    <div
+      class="mb-12"
+      *ngFor="let answerMessage of answerMessages; let i = index"
+    >
       <div class="thread-user-container">
-        <img class="thread-user-pic" src="./assets/img/profile_Pic_gray.png" alt="Pic">
+        <img
+          class="thread-user-pic"
+          src="./assets/img/profile_Pic_gray.png"
+          alt="Pic"
+        />
         <div class="thrad-user-name">
           {{ answerMessage.user }}
         </div>
@@ -47,8 +58,12 @@
       <mat-card class="mat-card-thread">
         <div class="card-thread-container">
           <div *ngIf="answerMessage['downloads']">
-            <a class="anhang-link" href="{{answerMessage['downloads']}}" target="_blank">
-              <img src="{{answerMessage['downloads']}}">
+            <a
+              class="anhang-link"
+              href="{{ answerMessage['downloads'] }}"
+              target="_blank"
+            >
+              <img src="{{ answerMessage['downloads'] }}" />
             </a>
           </div>
           <div class="thread">
@@ -61,21 +76,33 @@
 
   <mat-toolbar-row class="new-message-container">
     <div class="new-message-box">
-      <textarea #message class="new-message-input" name="message" id="message" placeholder="Nachricht hinzufügen"
-        (input)="setAnswer(message.value)"></textarea>
+      <textarea
+        #message
+        class="new-message-input"
+        name="message"
+        id="message"
+        placeholder="Nachricht hinzufügen"
+        (input)="setAnswer(message.value)"
+      ></textarea>
       <div class="icon-container">
         <div class="add-image-container">
-          <label class="add-image">+
-            <input type="file" id="file" (change)="selectFile($event)" name="image" autocomplete="off">
+          <label class="add-image"
+            >+
+            <input
+              type="file"
+              id="file"
+              (change)="selectFile($event)"
+              name="image"
+              autocomplete="off"
+            />
           </label>
-          <div *ngIf="percentage > 0">{{percentage.toString()}}%</div>
+          <div *ngIf="percentage > 0">{{ percentage.toString() }}%</div>
           <div class="file-name-container" *ngIf="selectedFiles">
-            <img [src]="imgSrc" class="file-preview">
+            <img [src]="imgSrc" class="file-preview" />
           </div>
         </div>
         <mat-icon (click)="saveAnswer()">send</mat-icon>
       </div>
     </div>
   </mat-toolbar-row>
-
 </mat-toolbar>

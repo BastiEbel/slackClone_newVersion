@@ -9,6 +9,7 @@
 }
 
 .container {
+    width: 100%;
     height: calc(100vh - 310px);
     overflow: auto;
 }
@@ -79,7 +80,7 @@
 /*--------Message box------------*/
 
 mat-card {
-    min-height: 16px;
+    min-height: 64px;
     width: 100%;
     display: flex;
     justify-content: space-between;
