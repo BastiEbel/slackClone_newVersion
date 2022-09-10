@@ -7,6 +7,8 @@ import { ChannelService } from '../services/channel.service';
 import { Message } from 'src/models/message.class';
 import { AuthService } from '../services/auth.service';
 import { getDownloadURL, getStorage, ref } from '@angular/fire/storage';
+import { ProfilServiceService } from '../services/profil-service.service';
+import { ChatServiceService } from '../services/chat-service.service';
 
 @Component({
   selector: 'app-threat-bar',
@@ -23,7 +25,7 @@ export class ThreatBarComponent implements OnInit {
   currentFileUpload?: FileUpload;
   newAnswer = new Message();
   percentage = 0;
-
+  user: any = [];
   imgSrc: string = '';
   selectedImage: any = null;
 
@@ -31,12 +33,14 @@ export class ThreatBarComponent implements OnInit {
     private uploadService: FileUploadService,
     public threadService: ThreadService,
     public channelService: ChannelService,
-    private authService: AuthService,
-    private firestore: AngularFirestore
+    private profileService: ProfilServiceService,
+    private firestore: AngularFirestore,
+    private deleteService: ChatServiceService
   ) {}
 
   ngOnInit(): void {
     this.getThread();
+    this.getUser();
   }
 
   getThread() {
@@ -48,9 +52,8 @@ export class ThreatBarComponent implements OnInit {
           .collection(
             `channels/${this.channel['channelId']}/messages/${this.thread['messageID']}/answers`
           )
-          .valueChanges()
+          .valueChanges({ idField: 'messageID' })
           .subscribe((msg: any) => {
-            //console.log(msg);
             this.answerMessages = msg;
           });
       });
@@ -99,6 +102,18 @@ export class ThreatBarComponent implements OnInit {
   }
 
   /**
+   * Show Date and Time for showing at message
+   * @param {number} time uploadTime of message
+   * @return {string} eg. 2021-01-16 09:41
+   */
+  uploadTimeToMessageTime(time) {
+    const isoTime = new Date(time).toISOString();
+    const date = isoTime.slice(0, 10);
+    const timeString = isoTime.slice(11, 16);
+    return date + ' / ' + timeString;
+  }
+
+  /**
    * Getting download Url from fileName
    * @param {string} fileName
    * @return string
@@ -142,8 +157,31 @@ export class ThreatBarComponent implements OnInit {
         uploadTime: actualTime,
         answers: this.newAnswer.answers,
         downloads: this.downloadURL || null,
-        /* user: this.authService.user.userName, */
+        user: this.user.displayName,
+        photoURL: this.user.photoURL || null,
       });
+  }
+
+  /**
+   * get the current User
+   *
+   */
+  getUser() {
+    this.profileService.currentUserProfile$.subscribe((result) => {
+      this.user = result;
+    });
+  }
+
+  /**
+   * Delete the Messages
+   * @param i index of the Message
+   *
+   */
+  deleteItem(i) {
+    this.deleteService.chatThread$.next({
+      threadId: this.answerMessages[i]['messageID'],
+    });
+    this.deleteService.deleteThread();
   }
 
   setAnswer(value: any) {

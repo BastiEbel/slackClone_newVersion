@@ -12,15 +12,17 @@
 
 <mat-toolbar class="message-section">
   <div class="thread-container">
-    <div class="mb-12 question-container">
-      <div class="thread-user-container">
+    <div class="question-container" style="margin-bottom: 64px">
+      <div class="answer-user-container">
         <img
           class="thread-user-pic"
-          src="./assets/img/profile_Pic_gray.png"
+          [src]="
+            threadService.question.photoURL ?? 'assets/img/profile_Pic_gray.png'
+          "
           alt="Pic"
         />
         <div class="thrad-user-name">
-          <!-- {{ threadService.question.user }} -->
+          {{ threadService.question.user }}
         </div>
       </div>
       <mat-card class="mat-card-thread mat-card-thread-question">
@@ -42,19 +44,40 @@
     </div>
 
     <div
-      class="mb-12"
+      class="mb-24"
       *ngFor="let answerMessage of answerMessages; let i = index"
     >
       <div class="thread-user-container">
-        <img
-          class="thread-user-pic"
-          src="./assets/img/profile_Pic_gray.png"
-          alt="Pic"
-        />
-        <div class="thrad-user-name">
-          {{ answerMessage.user }}
+        <div class="user-container">
+          <img
+            class="thread-user-pic"
+            [src]="answerMessage.photoURL ?? 'assets/img/profile_Pic_gray.png'"
+            alt="Pic"
+          />
+          <div class="thrad-user-name">
+            {{ answerMessage.user }}
+          </div>
+          <div class="message-time" *ngIf="answerMessage['uploadTime']">
+            {{ uploadTimeToMessageTime(answerMessage["uploadTime"]) }}
+          </div>
+        </div>
+        <div>
+          <button
+            class="thread-icon"
+            mat-icon-button
+            [matMenuTriggerFor]="menu"
+          >
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="deleteItem(i)">
+              <mat-icon>delete</mat-icon>
+              <span>Nachricht löschen</span>
+            </button>
+          </mat-menu>
         </div>
       </div>
+
       <mat-card class="mat-card-thread">
         <div class="card-thread-container">
           <div *ngIf="answerMessage['downloads']">

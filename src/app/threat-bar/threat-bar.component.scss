@@ -28,7 +28,6 @@
   justify-content: space-between;
 }
 
-
 .new-message-container {
   height: 180px;
   display: flex;
@@ -118,6 +117,16 @@
   margin-left: 10px;
 }
 
+.message-time {
+  font-size: 10px;
+  margin-left: 10px;
+}
+
+.user-container {
+  display: flex;
+  justify-content: center;
+}
+
 .thread-container {
   padding: 15px;
 }
@@ -127,11 +136,19 @@
   border-radius: 7px;
 }
 
+.answer-user-container {
+  width: 100%;
+  font-size: 15px;
+  display: flex;
+  margin-bottom: 5px;
+}
+
 .thread-user-container {
   width: 100%;
   font-size: 15px;
   display: flex;
   margin-bottom: 5px;
+  justify-content: space-between;
 }
 
 .thread-user-pic {
@@ -152,7 +169,7 @@
 .mat-card-thread {
   padding: 7px;
 }
-.mat-card-thread-question{
+.mat-card-thread-question {
   background-color: #cce0ff;
 }
 

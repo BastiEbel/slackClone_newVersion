@@ -46,7 +46,6 @@ export class MainComponent implements OnInit {
 
   ngOnInit(): void {
     this.getChannel();
-    this.getUser();
   }
 
   /**
@@ -144,10 +143,13 @@ export class MainComponent implements OnInit {
       });
   }
 
+  /**
+   * get the current User
+   *
+   */
   getUser() {
     this.profileService.currentUserProfile$.subscribe((result) => {
       this.user = result;
-      console.log(this.user);
     });
   }
 
