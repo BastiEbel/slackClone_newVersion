@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { FieldValue } from 'firebase/firestore';
 import { BehaviorSubject } from 'rxjs';
 import { ChannelService } from './channel.service';
 import { ThreadService } from './thread.service';

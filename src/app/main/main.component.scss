@@ -44,6 +44,12 @@
     }
 }
 
+.mat-card {
+    &:hover {
+        background-color: rgba(225, 225, 225, 0.486);
+    }
+}
+
 .message-user {
     width: 100%;
     display: flex;

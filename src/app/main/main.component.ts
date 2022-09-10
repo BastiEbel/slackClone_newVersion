@@ -46,6 +46,7 @@ export class MainComponent implements OnInit {
 
   ngOnInit(): void {
     this.getChannel();
+    this.getUser();
   }
 
   /**
@@ -139,7 +140,7 @@ export class MainComponent implements OnInit {
         question: this.newMessage.question,
         downloads: this.downloadURL || null,
         user: this.user.displayName,
-        photoURL: this.user.photoURL,
+        photoURL: this.user.photoURL || null,
       });
   }
 

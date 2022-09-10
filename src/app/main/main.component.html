@@ -89,7 +89,7 @@
             </div>
           </div>
 
-          <mat-icon (click)="saveMessage()">send</mat-icon>
+          <mat-icon (click)="saveMessage(); message.value = ''">send</mat-icon>
         </div>
       </div>
     </mat-toolbar>
