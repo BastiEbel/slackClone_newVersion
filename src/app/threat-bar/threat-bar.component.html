@@ -124,7 +124,7 @@
             <img [src]="imgSrc" class="file-preview" />
           </div>
         </div>
-        <mat-icon (click)="saveAnswer()">send</mat-icon>
+        <mat-icon (click)="saveAnswer(); message.value = ''">send</mat-icon>
       </div>
     </div>
   </mat-toolbar-row>

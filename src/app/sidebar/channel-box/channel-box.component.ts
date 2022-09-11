@@ -4,7 +4,6 @@ import { DialogAddChannelComponent } from 'src/app/dialog-add-channel/dialog-add
 import { Channel } from 'src/models/channel.class';
 import { MatDialog } from '@angular/material/dialog';
 import { ChannelService } from 'src/app/services/channel.service';
-import { Router } from '@angular/router';
 import { ThreadService } from 'src/app/services/thread.service';
 
 @Component({

@@ -7,7 +7,6 @@ import {
   authState,
 } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { concatMap, from, Observable, of } from 'rxjs';
 import { User } from 'src/models/user';
@@ -16,16 +15,13 @@ import { User } from 'src/models/user';
   providedIn: 'root',
 })
 export class AuthService {
-  message: string = 'Login';
-  guest: string = 'Guest';
-  login = true; //TODO auf false setzen bevor ich deploy
+  login = false; //TODO auf false setzen bevor ich deploy
   currentUser$ = authState(this._auth);
 
   constructor(
     public _auth: Auth,
     public router: Router,
-    public firestore: AngularFirestore,
-    public msg: MatSnackBar
+    public firestore: AngularFirestore
   ) {}
 
   /**

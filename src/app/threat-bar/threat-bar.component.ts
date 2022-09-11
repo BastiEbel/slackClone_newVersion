@@ -5,7 +5,6 @@ import { ThreadService } from '../services/thread.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { ChannelService } from '../services/channel.service';
 import { Message } from 'src/models/message.class';
-import { AuthService } from '../services/auth.service';
 import { getDownloadURL, getStorage, ref } from '@angular/fire/storage';
 import { ProfilServiceService } from '../services/profil-service.service';
 import { ChatServiceService } from '../services/chat-service.service';

@@ -14,6 +14,7 @@ import { AuthService } from './auth.service';
   providedIn: 'root',
 })
 export class ProfilServiceService {
+  ref: any;
   get currentUserProfile$(): Observable<User | null> {
     return this.authService.currentUser$.pipe(
       switchMap((user) => {
@@ -21,8 +22,8 @@ export class ProfilServiceService {
           return of(null);
         }
 
-        const ref = doc(this.firestore, 'users', user?.uid);
-        return docData(ref) as Observable<User>;
+        this.ref = doc(this.firestore, 'users', user?.uid);
+        return docData(this.ref) as Observable<User>;
       })
     );
   }

@@ -8,7 +8,6 @@ import {
 import { MatDrawer } from '@angular/material/sidenav';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { User } from 'src/models/user';
 import { AuthService } from '../services/auth.service';
 import { ThreadService } from '../services/thread.service';
 import { ProfilComponent } from '../profil/profil.component';
@@ -56,6 +55,7 @@ export class SlackAppComponent implements OnInit, AfterViewInit {
   logOut() {
     this.authService.logout().subscribe(() => {
       this.router.navigate(['/login']);
+      this.authService.login = false;
     });
   }
 }

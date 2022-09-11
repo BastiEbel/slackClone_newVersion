@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
 import {
   AbstractControl,
   FormBuilder,
@@ -10,12 +9,9 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
-import { doc } from 'firebase/firestore';
-import { Observable, switchMap } from 'rxjs';
-import { User } from 'src/models/user';
+import { switchMap } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { ProfilServiceService } from '../services/profil-service.service';
 
@@ -37,10 +33,10 @@ export function passwordsMatchValidator(): ValidatorFn {
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  /* matcher = new MyErrorStateMatcher(); */
-  loading = false;
-  hide = true;
-  hide1 = true;
+  loading: boolean = false;
+  hide: boolean = true;
+  hide1: boolean = true;
+  userId: any = [];
 
   loginForm = new FormGroup({
     email: new FormControl('', Validators.required),
@@ -69,7 +65,6 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
   get email() {
-    //return this.signInForm.get('email');
     return this.loginForm.get('email'), this.signUpForm.get('email');
   }
 
@@ -107,7 +102,12 @@ export class LoginComponent implements OnInit {
         })
       )
       .subscribe(() => {
-        this.router.navigate(['/slack/:id']);
+        this.authService.currentUser$.subscribe((res) => {
+          this.userId = res;
+          this.router.navigate([`/slack/${this.userId.uid}`]);
+        });
+
+        this.authService.login = true;
       });
     this.loading = false;
   }
@@ -132,10 +132,10 @@ export class LoginComponent implements OnInit {
    * User Registration
    *
    */
-  createUser() {
+  async createUser() {
     const { email, password, name } = this.signUpForm.value;
 
-    this.authService
+    await this.authService
       .signUp(email, password)
       .pipe(
         switchMap(({ user: { uid } }) =>
@@ -143,17 +143,42 @@ export class LoginComponent implements OnInit {
         ),
         this.toast.observe({
           success: 'You are registered',
-          loading: 'Signing In',
-          error: ({ message }) => `${message}`,
+          error: 'E-Mail already assigned',
         })
       )
       .subscribe(() => {
-        this.router.navigate([`/slack/:id`]);
+        this.authService.currentUser$.subscribe((res) => {
+          this.userId = res;
+          this.router.navigate([`/slack/${this.userId.uid}`]);
+        });
       });
+    this.loading = false;
   }
 
-  /* async loginGuest() {
-    await this.authService.guestLogin();
+  /**
+   * Guest login
+   *
+   */
+  async loginGuest() {
+    const email = 'guest@example.de';
+    const password = '12345678';
+    await this.authService
+      .signInUser(email, password)
+      .pipe(
+        this.toast.observe({
+          success: 'Logged in successfully',
+          loading: 'logging in...',
+          error: 'There was an error',
+        })
+      )
+      .subscribe(() => {
+        this.authService.currentUser$.subscribe((res) => {
+          this.userId = res;
+          this.router.navigate([`/slack/${this.userId.uid}`]);
+        });
+
+        this.authService.login = true;
+      });
     this.loading = false;
-  } */
+  }
 }
