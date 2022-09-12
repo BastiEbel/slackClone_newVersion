@@ -1,5 +1,7 @@
 <div class="dialog-container">
-  <mat-icon class="close" (click)="dialogRef.close()">close</mat-icon>
+  <div class="close-container">
+    <mat-icon class="close" (click)="dialogRef.close()">close</mat-icon>
+  </div>
   <h1>User Profile</h1>
 
   <div class="profile-img" *ngIf="user$ | async as user">
