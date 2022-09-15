@@ -1,9 +1,9 @@
 <div class="container">
   <mat-card class="container-card">
-    <mat-toolbar color="primary">
+    <mat-toolbar class="header-login">
       <mat-toolbar-row>
         <img class="header-logo" src="assets/favicons/favicon-96x96.png" />
-        <span>Slack-Clone</span>
+        <span><p>Slack-Clone</p></span>
       </mat-toolbar-row>
     </mat-toolbar>
     <mat-tab-group mat-align-tabs="center">
@@ -134,9 +134,7 @@
             </mat-error>
           </mat-form-field>
           <mat-card-actions class="full-width">
-            <button mat-flat-button color="primary" (click)="onSignUp()">
-              Registration
-            </button>
+            <button class="btn-login" (click)="onSignUp()">Registration</button>
           </mat-card-actions>
         </form>
       </mat-tab>

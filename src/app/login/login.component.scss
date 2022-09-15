@@ -10,26 +10,49 @@
     margin: 10px;
 }
 
+.header-login {
+    background: rgb(31, 35, 47);
+    background: linear-gradient(90deg, rgba(31, 35, 47, 1) 0%, rgba(36, 36, 179, 1) 32%, rgba(0, 212, 255, 1) 100%);
+}
+
+p {
+    color: white;
+}
+
+.btn-login {
+    background: rgb(31, 35, 47) !important;
+    background: linear-gradient(
+        90deg,
+        rgba(31, 35, 47, 1) 0%,
+        rgba(36, 36, 179, 1) 32%,
+        rgba(0, 212, 255, 1) 100%
+    ) !important;
+}
+/* 
+.mat-flat-button.mat-primary {
+    background-color: unset;
+} */
+
 .container-card {
     width: 400px;
     padding: unset;
 }
 
-form{
+form {
     padding-left: 16px;
     padding-right: 16px;
 }
 
-.mat-card-footer{
+.mat-card-footer {
     margin: unset;
 }
 
-mat-toolbar{
+mat-toolbar {
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
 }
 
-mat-card-actions{
+mat-card-actions {
     display: flex;
     align-items: flex-end;
     flex-direction: column;
@@ -37,12 +60,12 @@ mat-card-actions{
     padding-top: 0px;
     margin-top: 16px;
 
-    a{
+    a {
         margin-top: 16px;
         color: rgb(0, 0, 255);
         cursor: pointer;
 
-        &:hover{
+        &:hover {
             color: rgb(31, 31, 170);
             text-decoration: underline;
         }

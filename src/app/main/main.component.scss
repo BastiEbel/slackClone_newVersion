@@ -39,13 +39,11 @@
     justify-content: flex-start;
     align-items: center;
     flex-direction: column;
-    &:hover {
-        cursor: pointer;
-    }
 }
 
 .mat-card {
     &:hover {
+        cursor: pointer;
         background-color: rgba(225, 225, 225, 0.486);
     }
 }

@@ -143,7 +143,6 @@ export class LoginComponent implements OnInit {
         ),
         this.toast.observe({
           success: 'You are registered',
-          error: 'E-Mail already assigned',
         })
       )
       .subscribe(() => {

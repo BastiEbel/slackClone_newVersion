@@ -15,7 +15,7 @@ import { User } from 'src/models/user';
   providedIn: 'root',
 })
 export class AuthService {
-  login = false; //TODO auf false setzen bevor ich deploy
+  login = true; //TODO auf false setzen bevor ich deploy
   currentUser$ = authState(this._auth);
 
   constructor(
@@ -57,39 +57,4 @@ export class AuthService {
   logout() {
     return from(this._auth.signOut());
   }
-
-  /**
-   * user can login as a guest
-   *
-   */
-  /* guestLogin() {
-    this.firestore
-      .collection('users')
-      .valueChanges({ idField: 'id' })
-      .subscribe((result) => {
-        for (let i = 0; i < result.length; i++) {
-          if (result[i]['name'] == this.guest) {
-            this.login = true;
-            this.message = 'Logout';
-            this.router.navigateByUrl(`/slack/${result[i]['id']}`);
-          }
-        }
-      });
-  } */
-
-  /**
-   *
-   * @param userId userId for the Slack Component you can show the username
-   */
-  /* getUser(userId) {
-    if (userId) {
-      this.firestore
-        .collection('users')
-        .doc(userId)
-        .valueChanges()
-        .subscribe((user: any) => {
-          this.users = new User(user);
-        });
-    }
-  } */
 }
