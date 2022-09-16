@@ -37,7 +37,7 @@ export class MainComponent implements OnInit {
   constructor(
     private uploadService: FileUploadService,
     private fileList: FileUploadService, //?????????
-    private profileService: ProfilServiceService,
+    public profileService: ProfilServiceService,
     public firestore: AngularFirestore,
     public channelService: ChannelService,
     public threadService: ThreadService,

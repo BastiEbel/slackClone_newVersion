@@ -1,5 +1,7 @@
 .header {
-  background-color: white;
+  background: rgb(31, 35, 47);
+  background: linear-gradient(180deg, rgba(31, 35, 47, 1) 0%, rgba(36, 36, 179, 1) 32%, rgba(0, 212, 255, 1) 100%);
+  color: white;
   height: 32px;
   padding: 16px;
   display: flex;
@@ -129,6 +131,7 @@
 
 .thread-container {
   padding: 15px;
+  width: 300px;
 }
 
 .question-container {
