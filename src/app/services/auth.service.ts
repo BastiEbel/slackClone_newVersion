@@ -7,20 +7,23 @@ import {
   authState,
 } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { doc, Firestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { concatMap, from, Observable, of } from 'rxjs';
 import { User } from 'src/models/user';
+import { ProfilServiceService } from './profil-service.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  login = false; //TODO auf false setzen bevor ich deploy
+  login = true; //TODO auf false setzen bevor ich deploy
   currentUser$ = authState(this._auth);
 
   constructor(
     public _auth: Auth,
     public router: Router,
+    private afs: Firestore,
     public firestore: AngularFirestore
   ) {}
 
@@ -52,6 +55,11 @@ export class AuthService {
         return updateProfile(user, profileData);
       })
     );
+  }
+
+  deleteAcc() {
+    const user = this._auth.currentUser;
+    return user.delete();
   }
 
   logout() {

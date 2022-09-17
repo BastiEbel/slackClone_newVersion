@@ -1,0 +1,23 @@
+<div class="container" *ngIf="user$ | async as user">
+  <h1>Are you sure you want to delete the account?</h1>
+  <p [class.d-none]="user.displayName != 'Guest'" class="info">
+    Guest user cannot use this option!
+  </p>
+  <div class="btn-container">
+    <div class="btn">
+      <button class="close" mat-menu-item (click)="dialogRef.close()">
+        <mat-icon>cancel</mat-icon>
+        Close
+      </button>
+      <button
+        class="delete-Acc"
+        [disabled]="user.displayName == 'Guest'"
+        mat-menu-item
+        (click)="deleteUser()"
+      >
+        <mat-icon class="menu-icon" matSuffix>delete</mat-icon>
+        Delete Account
+      </button>
+    </div>
+  </div>
+</div>

@@ -28,6 +28,10 @@
     display: flex;
     justify-content: flex-end;
 }
+
+.mat-dialog-container {
+    padding: unset !important;
+}
 .close {
     &:hover {
         cursor: pointer;
@@ -52,4 +56,9 @@ form-container {
     width: 100%;
     display: flex;
     justify-content: flex-end;
+}
+
+p {
+    margin-top: 24px;
+    color: red;
 }

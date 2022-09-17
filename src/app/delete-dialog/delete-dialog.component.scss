@@ -1,0 +1,49 @@
+.container {
+    height: 180px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.info {
+    margin-top: 24px;
+    font-size: 18px;
+    color: red;
+}
+.btn-container {
+    width: 100%;
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-around;
+}
+.btn {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.close {
+    text-align: center;
+    width: 100px;
+    margin-right: 8px;
+}
+.delete-Acc {
+    margin-left: 8px;
+    width: 150px;
+}
+
+.mat-icon {
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
+button {
+    padding: unset;
+    display: flex;
+    align-items: center;
+    height: 30px;
+    text-align: center;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+}

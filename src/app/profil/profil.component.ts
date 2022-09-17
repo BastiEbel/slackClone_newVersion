@@ -17,6 +17,8 @@ import { User } from 'src/models/user';
 })
 export class ProfilComponent implements OnInit {
   user$ = this.profilService.currentUserProfile$;
+  users: any = [];
+  guest: boolean = false;
 
   profileForm = new FormGroup({
     uid: new FormControl(''),
@@ -39,6 +41,12 @@ export class ProfilComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe((user) => {
         this.profileForm.patchValue({ ...user });
+        this.users = user;
+        if (this.users.displayName === 'Guest') {
+          this.guest = true;
+        } else {
+          this.guest = false;
+        }
       });
   }
 

@@ -12,6 +12,7 @@ import { AuthService } from '../services/auth.service';
 import { ThreadService } from '../services/thread.service';
 import { ProfilComponent } from '../profil/profil.component';
 import { ProfilServiceService } from '../services/profil-service.service';
+import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 
 @Component({
   selector: 'app-slack-app',
@@ -50,6 +51,10 @@ export class SlackAppComponent implements OnInit, AfterViewInit {
 
   openDialog(): void {
     this.dialog.open(ProfilComponent);
+  }
+
+  deleteDialog() {
+    this.dialog.open(DeleteDialogComponent);
   }
 
   logOut() {

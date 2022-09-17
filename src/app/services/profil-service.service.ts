@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {
+  deleteDoc,
   doc,
   docData,
   Firestore,
@@ -38,5 +39,9 @@ export class ProfilServiceService {
   updateUser(user: User): Observable<any> {
     const ref = doc(this.firestore, 'users', user.uid);
     return from(updateDoc(ref, { ...user }));
+  }
+
+  deleteDBUser() {
+    return from(deleteDoc(this.ref));
   }
 }

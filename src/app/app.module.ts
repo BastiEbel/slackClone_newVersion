@@ -47,6 +47,7 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { HotToastModule } from '@ngneat/hot-toast';
 import { ProfilComponent } from './profil/profil.component';
 import { PmChatComponent } from './pm-chat/pm-chat.component';
+import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { PmChatComponent } from './pm-chat/pm-chat.component';
     DialogAddChannelComponent,
     ProfilComponent,
     PmChatComponent,
+    DeleteDialogComponent,
   ],
   imports: [
     BrowserModule,

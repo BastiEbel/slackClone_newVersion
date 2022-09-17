@@ -11,7 +11,11 @@
         height="120px"
         [src]="user.photoURL ?? '/assets/img/profile_Pic_gray.png'"
       />
-      <button mat-mini-fab (click)="inputField.click()">
+      <button
+        [disabled]="user.displayName == 'Guest'"
+        mat-mini-fab
+        (click)="inputField.click()"
+      >
         <mat-icon>edit</mat-icon>
       </button>
     </div>
@@ -74,6 +78,7 @@
     </div>
     <div class="button-container">
       <button
+        [disabled]="users.displayName == 'Guest'"
         type="submit"
         class="margin-top"
         mat-raised-button
@@ -82,5 +87,6 @@
         Save
       </button>
     </div>
+    <p [class.d-none]="!guest">Unregistered users cannot use this option!</p>
   </form>
 </div>

@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
   loading: boolean = false;
   hide: boolean = true;
   hide1: boolean = true;
-  userId: any = [];
+  userId: any = [] || null;
 
   loginForm = new FormGroup({
     email: new FormControl('', Validators.required),
@@ -62,7 +62,9 @@ export class LoginComponent implements OnInit {
     public auth: AngularFireAuth
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.router.navigate(['/login']);
+  }
 
   get email() {
     return this.loginForm.get('email'), this.signUpForm.get('email');

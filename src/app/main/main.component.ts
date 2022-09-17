@@ -139,7 +139,7 @@ export class MainComponent implements OnInit {
         uploadTime: actualTime,
         question: this.newMessage.question,
         downloads: this.downloadURL || null,
-        user: this.user.displayName,
+        user: this.user.displayName || null,
         photoURL: this.user.photoURL || null,
       });
   }
@@ -149,7 +149,7 @@ export class MainComponent implements OnInit {
    *
    */
   getUser() {
-    this.profileService.currentUserProfile$.subscribe((result) => {
+    this.profileService.currentUserProfile$.subscribe((result): any => {
       this.user = result;
     });
   }
