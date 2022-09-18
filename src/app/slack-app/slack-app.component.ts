@@ -41,12 +41,12 @@ export class SlackAppComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     if (!this.authService.login) {
-      this.router.navigateByUrl('/login');
+      this.router.navigate(['/login']);
     }
-    this.route.paramMap.subscribe((paramMap) => {
-      this.userId = paramMap.get('id');
+    /* this.route.paramMap.subscribe((paramMap) => {
+      this.userId = paramMap.get('id') || null;
       this.authService.currentUser$;
-    });
+    }); */
   }
 
   openDialog(): void {
@@ -58,9 +58,8 @@ export class SlackAppComponent implements OnInit, AfterViewInit {
   }
 
   logOut() {
-    this.authService.logout().subscribe(() => {
-      this.router.navigate(['/login']);
-      this.authService.login = false;
-    });
+    this.authService.logout();
+    this.router.navigate(['/login']);
+    this.authService.login = false;
   }
 }

@@ -20,12 +20,17 @@ export class DeleteDialogComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {}
+
+  /**
+   * Delete Account
+   *
+   */
   async deleteUser() {
+    this.dialogRef.close();
     this.authService.logout();
     this.authService.login = false;
     this.router.navigate(['/login']);
     await this.authService.deleteAcc();
     await this.profilService.deleteDBUser();
-    this.dialogRef.close();
   }
 }

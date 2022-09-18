@@ -36,7 +36,6 @@ export class LoginComponent implements OnInit {
   loading: boolean = false;
   hide: boolean = true;
   hide1: boolean = true;
-  userId: any = [] || null;
 
   loginForm = new FormGroup({
     email: new FormControl('', Validators.required),
@@ -82,7 +81,7 @@ export class LoginComponent implements OnInit {
    *
    * Login Function
    */
-  async onSignIn() {
+  onSignIn() {
     this.loading = true;
     if (!this.loginForm.valid) {
       this.loading = false;
@@ -91,10 +90,10 @@ export class LoginComponent implements OnInit {
     this.loginUser();
   }
 
-  loginUser() {
+  async loginUser() {
     const { email, password } = this.loginForm.value;
 
-    this.authService
+    await this.authService
       .signInUser(email, password)
       .pipe(
         this.toast.observe({
@@ -103,12 +102,8 @@ export class LoginComponent implements OnInit {
           error: 'There was an error',
         })
       )
-      .subscribe(() => {
-        this.authService.currentUser$.subscribe((res) => {
-          this.userId = res;
-          this.router.navigate([`/slack/${this.userId.uid}`]);
-        });
-
+      .subscribe((res) => {
+        this.router.navigate([`/slack/${res.user.uid}`]);
         this.authService.login = true;
       });
     this.loading = false;
@@ -149,8 +144,7 @@ export class LoginComponent implements OnInit {
       )
       .subscribe(() => {
         this.authService.currentUser$.subscribe((res) => {
-          this.userId = res;
-          this.router.navigate([`/slack/${this.userId.uid}`]);
+          this.router.navigate([`/slack/${res.uid}`]);
         });
       });
     this.loading = false;
@@ -160,26 +154,10 @@ export class LoginComponent implements OnInit {
    * Guest login
    *
    */
-  async loginGuest() {
+  loginGuest() {
     const email = 'guest@example.de';
     const password = '12345678';
-    await this.authService
-      .signInUser(email, password)
-      .pipe(
-        this.toast.observe({
-          success: 'Logged in successfully',
-          loading: 'logging in...',
-          error: 'There was an error',
-        })
-      )
-      .subscribe(() => {
-        this.authService.currentUser$.subscribe((res) => {
-          this.userId = res;
-          this.router.navigate([`/slack/${this.userId.uid}`]);
-        });
-
-        this.authService.login = true;
-      });
-    this.loading = false;
+    this.loginForm.setValue({ email, password });
+    return this.onSignIn();
   }
 }

@@ -37,11 +37,7 @@
         </div>
       </mat-toolbar-row>
       <mat-menu #userMenu="matMenu">
-        <button
-          mat-menu-item
-          routerLink="/login"
-          (click)="authService.logout()"
-        >
+        <button mat-menu-item (click)="logOut()">
           <mat-icon class="menu-icon" matSuffix>logout</mat-icon>
           Logout
         </button>
