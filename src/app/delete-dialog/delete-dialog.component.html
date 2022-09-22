@@ -1,6 +1,6 @@
 <div class="container" *ngIf="user$ | async as user">
   <h1>Are you sure you want to delete the account?</h1>
-  <p [class.d-none]="user.displayName != 'Guest'" class="info">
+  <p [class.d-none]="user.email != 'guest@example.de'" class="info">
     Guest user cannot use this option!
   </p>
   <div class="btn-container">
@@ -11,7 +11,7 @@
       </button>
       <button
         class="delete-Acc"
-        [disabled]="user.displayName == 'Guest'"
+        [disabled]="user.email == 'guest@example.de'"
         mat-menu-item
         (click)="deleteUser()"
       >

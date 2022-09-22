@@ -51,7 +51,8 @@
       </mat-menu>
     </mat-toolbar>
 
-    <app-main></app-main>
+    <app-main [class.d-none]="chatService.pm"></app-main>
+    <app-pm-chat [class.d-none]="!chatService.pm"></app-pm-chat>
   </mat-drawer-content>
   <mat-drawer
     #thread

@@ -130,7 +130,7 @@ export class LoginComponent implements OnInit {
    *
    */
   async createUser() {
-    const { email, password, name } = this.signUpForm.value;
+    const { email, password, name } = this.signUpForm.value; //TODO ERROR FirebaseError: Firebase: Error (auth/email-already-in-use). beheben
 
     await this.authService
       .signUp(email, password)
@@ -144,6 +144,7 @@ export class LoginComponent implements OnInit {
       )
       .subscribe(() => {
         this.authService.currentUser$.subscribe((res) => {
+          this.authService.login = true;
           this.router.navigate([`/slack/${res.uid}`]);
         });
       });

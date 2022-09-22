@@ -12,7 +12,7 @@
         [src]="user.photoURL ?? '/assets/img/profile_Pic_gray.png'"
       />
       <button
-        [disabled]="user.displayName == 'Guest'"
+        [disabled]="user.email == 'guest@example.de'"
         mat-mini-fab
         (click)="inputField.click()"
       >
@@ -78,7 +78,7 @@
     </div>
     <div class="button-container">
       <button
-        [disabled]="users.displayName == 'Guest'"
+        [disabled]="users.email == 'guest@example.de'"
         type="submit"
         class="margin-top"
         mat-raised-button

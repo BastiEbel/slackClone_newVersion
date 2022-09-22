@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 import { FileUploadService } from 'src/app/services/file-upload.service';
@@ -7,11 +7,8 @@ import { Message } from 'src/models/message.class';
 import { ChannelService } from '../services/channel.service';
 
 import { ThreadService } from '../services/thread.service';
-import { User } from 'src/models/user';
-import { AuthService } from '../services/auth.service';
 
 import { getDownloadURL, getStorage, ref } from '@angular/fire/storage';
-import { ResizableDirective } from '../resizable.directive';
 import { ChatServiceService } from '../services/chat-service.service';
 import { ProfilServiceService } from '../services/profil-service.service';
 
@@ -23,7 +20,7 @@ import { ProfilServiceService } from '../services/profil-service.service';
 export class MainComponent implements OnInit {
   selectedFiles?: FileList;
   currentFileUpload?: FileUpload;
-  percentage = 0;
+  percentage: number = 0;
   imgSrc: string = '';
   selectedImage: any = null;
   downloadURL: string;

@@ -12,17 +12,18 @@
   </div>
   <div class="menuUserContainerList" [class.d-none]="!dropdown">
     <div class="list" *ngFor="let user of allUsers; let i = index">
-      <div class="link user-box" (click)="openUser(i)">
-        <div class="left">
+      <div
+        *ngIf="user$ | async as users"
+        class="link user-box"
+        (click)="openUser(i)"
+      >
+        <button class="btn-user" [disabled]="users.email === user.email">
           <img
             class="profile-pic"
             [src]="user.photoURL ?? 'assets/img/profile_Pic_gray.png'"
           />
-        </div>
-        <div>
-          <!-- USER NAME -->
           {{ user.displayName }}
-        </div>
+        </button>
       </div>
     </div>
   </div>

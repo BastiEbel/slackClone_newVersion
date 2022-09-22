@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { DialogAddChannelComponent } from 'src/app/dialog-add-channel/dialog-add-channel.component';
 import { Channel } from 'src/models/channel.class';
 import { MatDialog } from '@angular/material/dialog';
 import { ChannelService } from 'src/app/services/channel.service';
 import { ThreadService } from 'src/app/services/thread.service';
+import { ChatServiceService } from 'src/app/services/chat-service.service';
 
 @Component({
   selector: 'app-channel-box',
@@ -15,12 +16,14 @@ export class ChannelBoxComponent implements OnInit {
   channel = new Channel();
   dropdown = true;
   allChannels = [];
+  @Input() pm;
 
   constructor(
     private firestore: AngularFirestore,
     public dialog: MatDialog,
     public channelService: ChannelService,
-    public threadService: ThreadService
+    public threadService: ThreadService,
+    public chatService: ChatServiceService
   ) {}
 
   async ngOnInit() {
@@ -37,6 +40,7 @@ export class ChannelBoxComponent implements OnInit {
   }
 
   openChannel(i) {
+    this.chatService.pm = false;
     this.channelService.data$.next({
       channelTitle: this.allChannels[i]['title'],
       channelId: this.allChannels[i]['customIdChannel'],

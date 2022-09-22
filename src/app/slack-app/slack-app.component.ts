@@ -2,6 +2,7 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  Input,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -13,6 +14,7 @@ import { ThreadService } from '../services/thread.service';
 import { ProfilComponent } from '../profil/profil.component';
 import { ProfilServiceService } from '../services/profil-service.service';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
+import { ChatServiceService } from '../services/chat-service.service';
 
 @Component({
   selector: 'app-slack-app',
@@ -30,7 +32,7 @@ export class SlackAppComponent implements OnInit, AfterViewInit {
     private router: Router,
     public threadService: ThreadService,
     public profilService: ProfilServiceService,
-    private route: ActivatedRoute,
+    public chatService: ChatServiceService,
     public el: ElementRef,
     public dialog: MatDialog
   ) {}
@@ -43,10 +45,6 @@ export class SlackAppComponent implements OnInit, AfterViewInit {
     if (!this.authService.login) {
       this.router.navigate(['/login']);
     }
-    /* this.route.paramMap.subscribe((paramMap) => {
-      this.userId = paramMap.get('id') || null;
-      this.authService.currentUser$;
-    }); */
   }
 
   openDialog(): void {

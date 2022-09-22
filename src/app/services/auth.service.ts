@@ -40,7 +40,7 @@ export class AuthService {
    * @param password for the password
    * @returns that will be return
    */
-  signUp(email: string, password: string) {
+  signUp(email: string, password: string): Observable<any> {
     return from(createUserWithEmailAndPassword(this._auth, email, password));
   }
 

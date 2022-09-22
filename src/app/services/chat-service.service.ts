@@ -12,8 +12,10 @@ export class ChatServiceService {
   thread: any;
   chatThread: string;
   chat: string;
+  pm: boolean = false;
   public chatData$: BehaviorSubject<any> = new BehaviorSubject('');
   public chatThread$: BehaviorSubject<any> = new BehaviorSubject('');
+  public pmData$: BehaviorSubject<any> = new BehaviorSubject('');
 
   constructor(
     private firestore: AngularFirestore,
