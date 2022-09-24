@@ -6,6 +6,7 @@
     justify-content: space-between;
     white-space: pre-wrap;
     align-items: flex-start;
+    padding: unset;
 }
 
 .container {
@@ -18,14 +19,16 @@
 .channel-name-container {
     float: right;
     display: flex;
-    justify-content: center;
-    margin: 20px 0px 5px 20px;
+    justify-content: flex-start;
+    margin: 20px 0px 5px 0px;
+    width: 100%;
 }
 
 .profile-pic {
     width: auto;
     height: 50px;
     margin-right: 16px;
+    margin-left: 20px;
     border-radius: 5px;
 }
 
@@ -33,6 +36,8 @@
     display: flex;
     align-items: center;
     font-size: 30px;
+    margin-bottom: 20px;
+    margin-left: 20px;
 }
 
 //Message box with name
@@ -209,4 +214,8 @@ mat-card {
     font-size: 15px;
     font-weight: 100;
     margin-left: 10px;
+}
+
+.d-none {
+    display: none;
 }

@@ -2,13 +2,12 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
-  Input,
   OnInit,
   ViewChild,
 } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { ThreadService } from '../services/thread.service';
 import { ProfilComponent } from '../profil/profil.component';
@@ -22,7 +21,6 @@ import { ChatServiceService } from '../services/chat-service.service';
   styleUrls: ['./slack-app.component.scss'],
 })
 export class SlackAppComponent implements OnInit, AfterViewInit {
-  userId = '';
   user$ = this.profilService.currentUserProfile$;
 
   @ViewChild('thread') thread: MatDrawer;

@@ -7,6 +7,7 @@ import { FileUploadService } from '../services/file-upload.service';
 import { getDownloadURL, getStorage, ref } from '@angular/fire/storage';
 import { ProfilServiceService } from '../services/profil-service.service';
 import { ThreadService } from '../services/thread.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-pm-chat',
@@ -20,11 +21,6 @@ export class PmChatComponent implements OnInit {
   imgSrc: string = '';
   selectedImage: any = null;
   downloadURL: string;
-  id: string;
-  pmData: any = [];
-  questions = [];
-  show = false;
-  personalMessage = new PersonalMessage();
   user: any = [];
   constructor(
     private uploadService: FileUploadService,
@@ -36,23 +32,40 @@ export class PmChatComponent implements OnInit {
     private deleteService: ChatServiceService
   ) {}
 
-  ngOnInit(): void {
-    this.getPMData();
+  ngOnInit(): void {}
+  ngOnChange(): void {}
+  ngAfterViewInit(): void {
+    this.chatService.getPMData();
   }
 
-  getPMData() {
-    this.chatService.pmData$.subscribe((dataPM) => {
-      this.pmData = dataPM;
-    });
+  /**
+   * Save Message and upload files by clicking send button, only if value isn´t empty
+   *
+   */
+  savePM() {
+    if (this.chatService.personalMessage.pmQuestion.length > 0) {
+      if (this.selectedFiles) {
+        this.chatService.savePMIntoFirestore().then(() => {
+          this.selectedFiles = undefined;
+          this.chatService.personalMessage.pmQuestion = '';
+          this.downloadURL = '';
+        });
+      } else {
+        this.chatService.savePMIntoFirestore().then(() => {
+          this.chatService.personalMessage.pmQuestion = '';
+          this.downloadURL = '';
+        });
+      }
+    }
   }
 
-  savePM() {}
+  setMessagePM(value) {
+    this.chatService.personalMessage.pmQuestion = value;
+  }
 
   deletePM(i) {}
 
   goToThreadPM(i) {}
-
-  setMessagePM(value) {}
 
   /**
    * Save selected File in variable selectedFiles

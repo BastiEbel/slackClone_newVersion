@@ -16,6 +16,7 @@ import { User } from 'src/models/user';
 })
 export class AuthService {
   login = true; //TODO auf false setzen bevor ich deploy
+  user: any = [];
   currentUser$ = authState(this._auth);
 
   constructor(

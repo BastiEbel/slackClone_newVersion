@@ -4,26 +4,31 @@
       <div class="channel-name">
         <img
           class="profile-pic"
-          [src]="pmData.photoURL ?? 'assets/img/profile_Pic_gray.png'"
+          [src]="
+            chatService.pmData.photoURL ?? 'assets/img/profile_Pic_gray.png'
+          "
         />
-        {{ pmData.displayName }}
+        <b>{{ chatService.pmData.displayName }}</b>
       </div>
     </div>
     <div class="container">
-      <div class="message-box" *ngFor="let message of questions; let i = index">
-        <div class="message-container">
+      <div
+        class="message-box"
+        *ngFor="let pmMessage of chatService.pmQuestions; let i = index"
+      >
+        <div [class.d-none]="!chatService.show" class="message-container">
           <div class="message-user">
             <div class="message-user-container">
               <img
                 class="message-user-pic"
-                [src]="message.photoURL ?? 'assets/img/profile_Pic_gray.png'"
+                [src]="pmMessage.photoURL ?? 'assets/img/profile_Pic_gray.png'"
                 alt="Pic"
               />
               <div class="message-user-name">
-                <!-- {{ message.user }} -->
+                {{ pmMessage.pmUser }}
               </div>
-              <div class="message-time" *ngIf="message['uploadTime']">
-                {{ uploadTimeToMessageTime(message["uploadTime"]) }}
+              <div class="message-time" *ngIf="pmMessage['uploadTime']">
+                {{ uploadTimeToMessageTime(pmMessage["uploadTime"]) }}
               </div>
             </div>
             <button
@@ -35,7 +40,7 @@
             </button>
             <mat-menu #menu="matMenu">
               <button
-                [disabled]="user.displayName != message.user"
+                [disabled]="user.displayName != pmMessage.user"
                 mat-menu-item
                 (click)="deletePM(i)"
               >
@@ -46,18 +51,18 @@
           </div>
           <mat-card (click)="goToThreadPM(i)">
             <div class="card-message-container">
-              <div *ngIf="message['downloads']">
+              <div *ngIf="pmMessage['downloads']">
                 <a
                   class="anhang-link"
-                  href="{{ message['downloads'] }}"
+                  href="{{ pmMessage['downloads'] }}"
                   target="_blank"
                 >
-                  <img src="{{ message['downloads'] }}" />
+                  <img src="{{ pmMessage['downloads'] }}" />
                 </a>
               </div>
 
               <div class="message">
-                <!-- {{ message.question }} -->
+                {{ pmMessage.pmQuestion }}
               </div>
             </div>
           </mat-card>

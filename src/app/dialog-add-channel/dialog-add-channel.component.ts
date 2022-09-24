@@ -6,25 +6,24 @@ import { Channel } from 'src/models/channel.class';
 @Component({
   selector: 'app-dialog-add-channel',
   templateUrl: './dialog-add-channel.component.html',
-  styleUrls: ['./dialog-add-channel.component.scss']
+  styleUrls: ['./dialog-add-channel.component.scss'],
 })
 export class DialogAddChannelComponent implements OnInit {
+  channel = new Channel();
 
-  channel = new Channel;
+  constructor(
+    private firestore: AngularFirestore,
+    public dialogRef: MatDialogRef<DialogAddChannelComponent>
+  ) {}
 
-  constructor(private firestore: AngularFirestore, public dialogRef: MatDialogRef<DialogAddChannelComponent>) { }
+  ngOnInit(): void {}
 
-  ngOnInit(): void {
-  }
-
-  saveChannel(){
+  saveChannel() {
     this.firestore
-    .collection('channels')
-    .add(this.channel.toJSON())
-    .then((result: any) => {
-      console.log('adding channel finished', result);
-      this.dialogRef.close();
-    });
+      .collection('channels')
+      .add(this.channel.toJSON())
+      .then(() => {
+        this.dialogRef.close();
+      });
   }
-
 }
