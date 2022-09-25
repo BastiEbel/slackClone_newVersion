@@ -40,7 +40,7 @@
             </button>
             <mat-menu #menu="matMenu">
               <button
-                [disabled]="user.displayName != pmMessage.user"
+                [disabled]="user.displayName == pmMessage.pmUser"
                 mat-menu-item
                 (click)="deletePM(i)"
               >
@@ -49,7 +49,7 @@
               </button>
             </mat-menu>
           </div>
-          <mat-card (click)="goToThreadPM(i)">
+          <mat-card>
             <div class="card-message-container">
               <div *ngIf="pmMessage['downloads']">
                 <a

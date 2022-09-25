@@ -26,6 +26,7 @@ export class ChatServiceService {
   public chatData$: BehaviorSubject<any> = new BehaviorSubject('');
   public chatThread$: BehaviorSubject<any> = new BehaviorSubject('');
   public pmData$: BehaviorSubject<any> = new BehaviorSubject('');
+  public deletePM$: BehaviorSubject<any> = new BehaviorSubject('');
 
   constructor(
     private firestore: AngularFirestore,
@@ -39,7 +40,6 @@ export class ChatServiceService {
      */
     this.profileService.currentUserProfile$.subscribe((result): any => {
       this.user = result;
-      this.userUID = this.user?.uid;
     });
   }
 
@@ -49,9 +49,27 @@ export class ChatServiceService {
    */
   savePMIntoFirestore() {
     const currentTime = new Date().getTime();
+    return (
+      this.firestore
+        .collection(`pmUser/${this.pmData.uID}/message`)
+        .doc(currentTime.toString())
+        .set({
+          userName: this.pmData.displayName,
+          uploadTime: currentTime,
+          pmQuestion: this.personalMessage.pmQuestion,
+          downloads: this.downloadURL || null,
+          pmUser: this.user.displayName || null,
+          photoURL: this.user.photoURL || null,
+        }),
+      this.savePMAboutUser()
+    );
+  }
+
+  savePMAboutUser() {
+    const currentTime = new Date().getTime();
     return this.firestore
-      .collection(`pmUser/`)
-      .doc(this.pmData.uID)
+      .collection(`pmUser/${this.user.uid}/message`)
+      .doc(currentTime.toString())
       .set({
         userName: this.pmData.displayName,
         uploadTime: currentTime,
@@ -71,47 +89,42 @@ export class ChatServiceService {
       this.pmData = dataPM;
 
       this.firestore
-        .collection(`pmUser/`)
+        .collection(`pmUser/${this.pmData.uID}/message`)
         .valueChanges({ idField: 'messageUID' })
         .subscribe((pmMessage: any) => {
           this.pmQuestions = pmMessage;
-          if (this.userUID != null) {
-            for (let i = 0; i < this.pmQuestions.length; i++) {
-              if (
-                this.pmQuestions[0]['messageUID'] === this.pmData.uID ||
-                (this.pmQuestions[0]['messageUID'] === this.userUID &&
-                  this.pmQuestions[0]['pmUser'] === this.pmData.displayName)
-              ) {
-                this.show = true;
-              } else {
-                this.show = false;
-              }
+
+          for (let i = 0; i < this.pmQuestions.length; i++) {
+            if (
+              this.pmQuestions[0]['userName'] === this.pmData?.displayName ||
+              this.pmQuestions[0]['pmUser'] === this.user?.displayName ||
+              this.pmQuestions[0]['pmUser'] === this.pmData.displayName
+            ) {
+              this.show = true;
+            } else {
+              this.show = false;
             }
           }
         });
     });
   }
 
-  /* async getData() {
-    let pmData = this.user.uid;
-    await this.firestore
-      .collection(`pmUser/${pmData}/message/`)
-      .valueChanges({ idField: 'messageUID' })
-      .subscribe((pmMessage: any) => {
-        this.pmQuestions = pmMessage;
-
-        for (let i = 0; i < this.pmQuestions.length; i++) {
-          if (
-            this.pmQuestions[i]['pmUser'] ||
-            this.pmQuestions[i]['userName'] != this.user.displayName
-          ) {
-            this.show = false;
-          } else {
-            this.show = true;
-          }
-        }
+  /**
+   * Delete Personal Message(PM)
+   *
+   */
+  async deletePMChat() {
+    await this.pmData$.subscribe((dataPM) => {
+      this.pmData = dataPM;
+      this.deletePM$.subscribe((pm) => {
+        let deletePM = pm;
+        this.firestore
+          .collection(`pmUser/${this.pmData.uID}/message`)
+          .doc(deletePM['messageUID'])
+          .delete();
       });
-  } */
+    });
+  }
 
   /**
    * function to delete Messages

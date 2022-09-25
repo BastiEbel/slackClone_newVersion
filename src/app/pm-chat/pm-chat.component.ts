@@ -26,12 +26,10 @@ export class PmChatComponent implements OnInit {
     public profileService: ProfilServiceService,
     public firestore: AngularFirestore,
     public chatService: ChatServiceService,
-    public threadService: ThreadService,
-    private deleteService: ChatServiceService
+    public threadService: ThreadService
   ) {}
 
   ngOnInit(): void {}
-  ngOnChange(): void {}
   ngAfterViewInit(): void {
     this.chatService.getPMData();
   }
@@ -61,9 +59,12 @@ export class PmChatComponent implements OnInit {
     this.chatService.personalMessage.pmQuestion = value;
   }
 
-  deletePM(i) {}
-
-  goToThreadPM(i) {}
+  deletePM(i) {
+    this.chatService.deletePM$.next({
+      messageUID: this.chatService.pmQuestions[i]['messageUID'],
+    });
+    this.chatService.deletePMChat();
+  }
 
   /**
    * Save selected File in variable selectedFiles
