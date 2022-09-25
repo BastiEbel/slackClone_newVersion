@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FileUpload } from 'src/models/file-upload.model';
-import { PersonalMessage } from 'src/models/personal-message.class';
 import { ChatServiceService } from '../services/chat-service.service';
 import { FileUploadService } from '../services/file-upload.service';
 import { getDownloadURL, getStorage, ref } from '@angular/fire/storage';
 import { ProfilServiceService } from '../services/profil-service.service';
 import { ThreadService } from '../services/thread.service';
-import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-pm-chat',

@@ -20,7 +20,7 @@ export class ChatServiceService {
   downloadURL: string;
   pm: boolean = false;
   show: boolean = false;
-  pmUser = this.profileService.currentUserProfile$;
+  userUID: string;
 
   personalMessage = new PersonalMessage();
   public chatData$: BehaviorSubject<any> = new BehaviorSubject('');
@@ -39,7 +39,7 @@ export class ChatServiceService {
      */
     this.profileService.currentUserProfile$.subscribe((result): any => {
       this.user = result;
-      return this.user;
+      this.userUID = this.user?.uid;
     });
   }
 
@@ -51,7 +51,7 @@ export class ChatServiceService {
     const currentTime = new Date().getTime();
     return this.firestore
       .collection(`pmUser/`)
-      .doc(currentTime.toString())
+      .doc(this.pmData.uID)
       .set({
         userName: this.pmData.displayName,
         uploadTime: currentTime,
@@ -69,19 +69,23 @@ export class ChatServiceService {
   async getPMData() {
     await this.pmData$.subscribe((dataPM) => {
       this.pmData = dataPM;
+
       this.firestore
         .collection(`pmUser/`)
         .valueChanges({ idField: 'messageUID' })
         .subscribe((pmMessage: any) => {
           this.pmQuestions = pmMessage;
-          for (let i = 0; i < this.pmQuestions.length; i++) {
-            if (
-              this.pmData.displayName === this.pmQuestions[0]['userName'] ||
-              this.pmData.displayName === this.pmQuestions[0]['pmUser']
-            ) {
-              this.show = true;
-            } else {
-              this.show = false;
+          if (this.userUID != null) {
+            for (let i = 0; i < this.pmQuestions.length; i++) {
+              if (
+                this.pmQuestions[0]['messageUID'] === this.pmData.uID ||
+                (this.pmQuestions[0]['messageUID'] === this.userUID &&
+                  this.pmQuestions[0]['pmUser'] === this.pmData.displayName)
+              ) {
+                this.show = true;
+              } else {
+                this.show = false;
+              }
             }
           }
         });
@@ -89,28 +93,24 @@ export class ChatServiceService {
   }
 
   /* async getData() {
-    await this.profileService.currentUserProfile$.subscribe((dataUser) => {
-      this.user = dataUser;
-      this.pmData$.subscribe((dataPM) => {
-        this.pmData = dataPM;
-        this.firestore
-          .collection(`pmUser/${this.user.uid}/message/`)
-          .valueChanges({ idField: 'messageUID' })
-          .subscribe((pmMessage: any) => {
-            this.pmQuestions = pmMessage;
-            console.log(this.pmQuestions);
-            for (let i = 0; i < this.pmQuestions.length; i++) {
-              console.log(this.pmData.displayName);
-              if (this.pmQuestions[0]['pmUser'] === this.pmData.displayName) {
-                this.show = true;
-              } else {
-                this.getPMData();
-                this.show = false;
-              }
-            }
-          });
+    let pmData = this.user.uid;
+    await this.firestore
+      .collection(`pmUser/${pmData}/message/`)
+      .valueChanges({ idField: 'messageUID' })
+      .subscribe((pmMessage: any) => {
+        this.pmQuestions = pmMessage;
+
+        for (let i = 0; i < this.pmQuestions.length; i++) {
+          if (
+            this.pmQuestions[i]['pmUser'] ||
+            this.pmQuestions[i]['userName'] != this.user.displayName
+          ) {
+            this.show = false;
+          } else {
+            this.show = true;
+          }
+        }
       });
-    });
   } */
 
   /**
