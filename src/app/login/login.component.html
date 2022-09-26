@@ -2,7 +2,7 @@
   <mat-card class="container-card">
     <mat-toolbar class="header-login">
       <mat-toolbar-row>
-        <img class="header-logo" src="assets/favicons/favicon-96x96.png" />
+        <img class="header-logo" src="/assets/favicons/LogoMakr-8cOVOR.png" />
         <span><p>Slack-Clone</p></span>
       </mat-toolbar-row>
     </mat-toolbar>
@@ -39,6 +39,7 @@
               formControlName="password"
               required
               minlength="8"
+              (keyup.enter)="onSignIn()"
             />
             <mat-error *ngIf="password?.errors?.['required']">
               Password is required</mat-error
@@ -120,6 +121,7 @@
               matInput
               [type]="hide ? 'password' : 'text'"
               minlength="8"
+              (keyup.enter)="onSignUp()"
             />
             <button mat-icon-button matSuffix (click)="hide = !hide">
               <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>

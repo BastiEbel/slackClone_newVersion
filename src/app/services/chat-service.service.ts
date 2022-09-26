@@ -123,6 +123,17 @@ export class ChatServiceService {
           .doc(deletePM['messageUID'])
           .delete();
       });
+      this.deletePMChatCopy();
+    });
+  }
+
+  async deletePMChatCopy() {
+    await this.deletePM$.subscribe((pm) => {
+      let deletePM = pm;
+      this.firestore
+        .collection(`pmUser/${this.user.uid}/message`)
+        .doc(deletePM['messageUID'])
+        .delete();
     });
   }
 

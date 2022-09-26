@@ -70,6 +70,7 @@
           id="message"
           placeholder="Nachricht hinzufügen"
           (input)="setMessage(message.value)"
+          (keyup.enter)="saveMessage(); message.value = ''"
         ></textarea>
 
         <div class="icon-container">
