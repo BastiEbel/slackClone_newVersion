@@ -20,6 +20,8 @@ export class ChatServiceService {
   downloadURL: string;
   pm: boolean = false;
   show: boolean = false;
+  opened: boolean = true;
+  sideNav: boolean = false;
   userUID: string;
 
   personalMessage = new PersonalMessage();

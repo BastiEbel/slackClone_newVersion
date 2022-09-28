@@ -1,5 +1,13 @@
-<mat-drawer-container class="mat-drawer-container">
-  <mat-drawer #drawer class="sidenav-mat-drawer" mode="side" [opened]="true">
+<mat-drawer-container
+  (window:resize)="onResize($event)"
+  class="mat-drawer-container"
+>
+  <mat-drawer
+    #drawer
+    class="sidenav-mat-drawer"
+    mode="side"
+    [opened]="chatService.opened"
+  >
     <app-sidebar></app-sidebar>
   </mat-drawer>
   <mat-drawer-content>
@@ -7,10 +15,11 @@
       <mat-toolbar-row class="header-content">
         <div class="header-left">
           <mat-icon
+            [class.d-none]="drawer.opened"
             style="margin-right: 24px"
-            (click)="drawer.toggle()"
+            (click)="openSidebar()"
             class="menu-icon"
-            >menu</mat-icon
+            >menu_open</mat-icon
           >
           <img class="header-logo" src="/assets/favicons/LogoMakr-8cOVOR.png" />
           <span>Slack-Clone</span>
@@ -25,7 +34,7 @@
                 height="30"
                 [src]="user.photoURL ?? 'assets/img/profile_Pic_gray.png'"
               />
-              {{ user.displayName }}
+              <span class="displayName">{{ user.displayName }}</span>
               <mat-icon>expand_more</mat-icon>
             </button>
           </ng-container>

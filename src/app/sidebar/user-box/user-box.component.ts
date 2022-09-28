@@ -39,7 +39,9 @@ export class UserBoxComponent implements OnInit {
       displayName: this.allUsers[i]['displayName'],
       uID: this.allUsers[i]['uid'],
     });
-    return (this.threadService.opened = false);
+    return (
+      (this.threadService.opened = false), (this.chatService.opened = false)
+    );
   }
 
   seeDropdown() {

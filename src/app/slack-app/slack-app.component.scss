@@ -42,10 +42,6 @@
     align-items: center;
 }
 
-.menu-icon {
-    cursor: pointer;
-}
-
 .delete-Acc {
     color: red;
 }
@@ -65,6 +61,7 @@
 
 .menu-icon {
     width: 15px !important;
+    cursor: pointer;
 }
 
 .mat-icon {
@@ -121,4 +118,10 @@
 
 .d-none {
     display: none;
+}
+
+@media (max-width: 600px) {
+    .displayName {
+        display: none;
+    }
 }

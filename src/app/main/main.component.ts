@@ -37,6 +37,7 @@ export class MainComponent implements OnInit {
     public profileService: ProfilServiceService,
     public firestore: AngularFirestore,
     public channelService: ChannelService,
+    public chatService: ChatServiceService,
     public threadService: ThreadService,
     private deleteService: ChatServiceService
   ) {}

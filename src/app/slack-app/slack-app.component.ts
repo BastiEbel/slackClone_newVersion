@@ -1,7 +1,9 @@
 import {
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
   ElementRef,
+  HostListener,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -25,6 +27,18 @@ export class SlackAppComponent implements OnInit, AfterViewInit {
 
   @ViewChild('thread') thread: MatDrawer;
 
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    if (event.target.innerWidth < '600') {
+      this.chatService.opened = false;
+      this.chatService.sideNav = true;
+    }
+    if (event.target.innerWidth > '600') {
+      this.chatService.opened = true;
+      this.chatService.sideNav = false;
+    }
+  }
+
   constructor(
     public authService: AuthService,
     private router: Router,
@@ -32,11 +46,18 @@ export class SlackAppComponent implements OnInit, AfterViewInit {
     public profilService: ProfilServiceService,
     public chatService: ChatServiceService,
     public el: ElementRef,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private changeDetectorRef: ChangeDetectorRef
   ) {}
 
-  ngAfterViewInit(): void {
+  ngAfterViewInit() {
     this.thread.opened = this.threadService.opened;
+    if (window.innerWidth < 600 && this.chatService.opened) {
+      this.chatService.opened = false;
+    }
+
+    this.changeDetectorRef.detectChanges();
+    return this.chatService.opened, this.chatService.sideNav;
   }
 
   ngOnInit(): void {
@@ -47,6 +68,10 @@ export class SlackAppComponent implements OnInit, AfterViewInit {
 
   openDialog(): void {
     this.dialog.open(ProfilComponent);
+  }
+
+  openSidebar() {
+    return (this.chatService.opened = true), this.chatService.sideNav;
   }
 
   deleteDialog() {
