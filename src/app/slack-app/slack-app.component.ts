@@ -32,10 +32,12 @@ export class SlackAppComponent implements OnInit, AfterViewInit {
     if (event.target.innerWidth < '600') {
       this.chatService.opened = false;
       this.chatService.sideNav = true;
+      this.threadService.sideNav = true;
     }
     if (event.target.innerWidth > '600') {
       this.chatService.opened = true;
       this.chatService.sideNav = false;
+      this.threadService.sideNav = false;
     }
   }
 
@@ -57,7 +59,11 @@ export class SlackAppComponent implements OnInit, AfterViewInit {
     }
 
     this.changeDetectorRef.detectChanges();
-    return this.chatService.opened, this.chatService.sideNav;
+    return (
+      this.chatService.opened,
+      this.chatService.sideNav,
+      this.threadService.sideNav
+    );
   }
 
   ngOnInit(): void {

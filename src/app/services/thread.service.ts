@@ -9,6 +9,7 @@ import { ChannelService } from './channel.service';
 })
 export class ThreadService {
   opened: boolean = false;
+  sideNav: boolean = false;
   public data$: BehaviorSubject<any> = new BehaviorSubject('');
   thread = '';
   channel = '';

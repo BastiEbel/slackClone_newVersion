@@ -1,135 +1,140 @@
-<div class="header">
-  <div class="headline">
-    <div>Thread</div>
-    <div class="headline-small">
-      {{ channel["channelTitle"] }}
-    </div>
-  </div>
-  <button mat-icon-button (click)="closeThread()">
-    <mat-icon>close</mat-icon>
-  </button>
-</div>
-
-<mat-toolbar class="message-section">
-  <div class="thread-container">
-    <div class="question-container" style="margin-bottom: 64px">
-      <div class="answer-user-container">
-        <img
-          class="thread-user-pic"
-          [src]="
-            threadService.question.photoURL ?? 'assets/img/profile_Pic_gray.png'
-          "
-          alt="Pic"
-        />
-        <div class="thrad-user-name">
-          {{ threadService.question.user }}
-        </div>
+<div [class.container-thread]="threadService.sideNav">
+  <div class="header">
+    <div class="headline">
+      <div>Thread</div>
+      <div class="headline-small">
+        {{ channel["channelTitle"] }}
       </div>
-      <mat-card class="mat-card-thread mat-card-thread-question">
-        <div class="card-thread-container">
-          <div *ngIf="question['downloads']">
-            <a
-              class="anhang-link"
-              href="{{ question['downloads'] }}"
-              target="_blank"
-            >
-              <img src="{{ question['downloads'] }}" />
-            </a>
-          </div>
-          <div class="thread">
-            {{ threadService.question.question }}
-          </div>
-        </div>
-      </mat-card>
     </div>
+    <button mat-icon-button (click)="closeThread()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
 
-    <div
-      class="mb-24"
-      *ngFor="let answerMessage of answerMessages; let i = index"
-    >
-      <div class="thread-user-container">
-        <div class="user-container">
+  <mat-toolbar class="message-section">
+    <div class="thread-container">
+      <div class="question-container" style="margin-bottom: 64px">
+        <div class="answer-user-container">
           <img
             class="thread-user-pic"
-            [src]="answerMessage.photoURL ?? 'assets/img/profile_Pic_gray.png'"
+            [src]="
+              threadService.question.photoURL ??
+              'assets/img/profile_Pic_gray.png'
+            "
             alt="Pic"
           />
           <div class="thrad-user-name">
-            {{ answerMessage.user }}
-          </div>
-          <div class="message-time" *ngIf="answerMessage['uploadTime']">
-            {{ uploadTimeToMessageTime(answerMessage["uploadTime"]) }}
+            {{ threadService.question.user }}
           </div>
         </div>
-        <div>
-          <button
-            class="thread-icon"
-            mat-icon-button
-            [matMenuTriggerFor]="menu"
-          >
-            <mat-icon>more_vert</mat-icon>
-          </button>
-          <mat-menu #menu="matMenu">
-            <button
-              [disabled]="user.displayName != answerMessage.user"
-              mat-menu-item
-              (click)="deleteItem(i)"
-            >
-              <mat-icon>delete</mat-icon>
-              <span>Nachricht löschen</span>
-            </button>
-          </mat-menu>
-        </div>
+        <mat-card class="mat-card-thread mat-card-thread-question">
+          <div class="card-thread-container">
+            <div *ngIf="question['downloads']">
+              <a
+                class="anhang-link"
+                href="{{ question['downloads'] }}"
+                target="_blank"
+              >
+                <img src="{{ question['downloads'] }}" />
+              </a>
+            </div>
+            <div class="thread">
+              {{ threadService.question.question }}
+            </div>
+          </div>
+        </mat-card>
       </div>
 
-      <mat-card class="mat-card-thread">
-        <div class="card-thread-container">
-          <div *ngIf="answerMessage['downloads']">
-            <a
-              class="anhang-link"
-              href="{{ answerMessage['downloads'] }}"
-              target="_blank"
-            >
-              <img src="{{ answerMessage['downloads'] }}" />
-            </a>
-          </div>
-          <div class="thread">
-            {{ answerMessage.answers }}
-          </div>
-        </div>
-      </mat-card>
-    </div>
-  </div>
-
-  <mat-toolbar-row class="new-message-container">
-    <div class="new-message-box">
-      <textarea
-        #message
-        class="new-message-input"
-        name="message"
-        id="message"
-        placeholder="Nachricht hinzufügen"
-        (input)="setAnswer(message.value)"
-      ></textarea>
-      <div class="icon-container">
-        <div class="add-image-container">
-          <label class="add-image"
-            >+
-            <input
-              type="file"
-              id="file"
-              (change)="selectFile($event)"
-              name="image"
-              autocomplete="off"
+      <div
+        class="mb-24"
+        *ngFor="let answerMessage of answerMessages; let i = index"
+      >
+        <div class="thread-user-container">
+          <div class="user-container">
+            <img
+              class="thread-user-pic"
+              [src]="
+                answerMessage.photoURL ?? 'assets/img/profile_Pic_gray.png'
+              "
+              alt="Pic"
             />
-          </label>
-          <div *ngIf="percentage > 0">{{ percentage.toString() }}%</div>
-          <div class="file-name-container" *ngIf="selectedFiles">
-            <img [src]="imgSrc" class="file-preview" />
+            <div class="thrad-user-name">
+              {{ answerMessage.user }}
+            </div>
+            <div class="message-time" *ngIf="answerMessage['uploadTime']">
+              {{ uploadTimeToMessageTime(answerMessage["uploadTime"]) }}
+            </div>
+          </div>
+          <div>
+            <button
+              class="thread-icon"
+              mat-icon-button
+              [matMenuTriggerFor]="menu"
+            >
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button
+                [disabled]="user.displayName != answerMessage.user"
+                mat-menu-item
+                (click)="deleteItem(i)"
+              >
+                <mat-icon>delete</mat-icon>
+                <span>Nachricht löschen</span>
+              </button>
+            </mat-menu>
           </div>
         </div>
-        <mat-icon (click)="saveAnswer(); message.value = ''">send</mat-icon>
+
+        <mat-card class="mat-card-thread">
+          <div class="card-thread-container">
+            <div *ngIf="answerMessage['downloads']">
+              <a
+                class="anhang-link"
+                href="{{ answerMessage['downloads'] }}"
+                target="_blank"
+              >
+                <img src="{{ answerMessage['downloads'] }}" />
+              </a>
+            </div>
+            <div class="thread">
+              {{ answerMessage.answers }}
+            </div>
+          </div>
+        </mat-card>
       </div>
     </div>
-  </mat-toolbar-row>
-</mat-toolbar>
+
+    <mat-toolbar-row class="new-message-container">
+      <div class="new-message-box">
+        <textarea
+          #message
+          class="new-message-input"
+          name="message"
+          id="message"
+          placeholder="Nachricht hinzufügen"
+          (input)="setAnswer(message.value)"
+        ></textarea>
+        <div class="icon-container">
+          <div class="add-image-container">
+            <label class="add-image"
+              >+
+              <input
+                type="file"
+                id="file"
+                (change)="selectFile($event)"
+                name="image"
+                autocomplete="off"
+              />
+            </label>
+            <div *ngIf="percentage > 0">{{ percentage.toString() }}%</div>
+            <div class="file-name-container" *ngIf="selectedFiles">
+              <img [src]="imgSrc" class="file-preview" />
+            </div>
+          </div>
+          <mat-icon (click)="saveAnswer(); message.value = ''">send</mat-icon>
+        </div>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+</div>

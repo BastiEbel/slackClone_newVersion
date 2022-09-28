@@ -125,3 +125,20 @@
         display: none;
     }
 }
+@media (max-width: 350px) {
+    .header-name {
+        font-size: 18px;
+    }
+    .header-logo {
+        height: 25px;
+    }
+}
+
+@media (max-width: 310px) {
+    .mat-icon {
+        margin-right: 10px !important;
+    }
+    .mat-button {
+        padding: unset !important;
+    }
+}

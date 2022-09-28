@@ -42,6 +42,12 @@ export class ThreatBarComponent implements OnInit {
     this.getUser();
   }
 
+  ngAfterViewInit() {
+    if (window.innerWidth < 600) {
+      this.threadService.sideNav = true;
+    }
+  }
+
   getThread() {
     this.channelService.data$.subscribe((channelData) => {
       this.channel = channelData;
