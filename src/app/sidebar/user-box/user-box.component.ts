@@ -32,6 +32,11 @@ export class UserBoxComponent implements OnInit {
       });
   }
 
+  /**
+   * this function open the User area for Personal Message
+   * @param i is the number of the user
+   * @returns for responsive SideNav
+   */
   openUser(i) {
     this.chatService.pm = true;
     this.chatService.pmData$.next({
@@ -44,6 +49,10 @@ export class UserBoxComponent implements OnInit {
     );
   }
 
+  /**
+   * switch on and off the user box
+   *
+   */
   seeDropdown() {
     this.dropdown = !this.dropdown;
   }

@@ -18,6 +18,10 @@ export class DialogAddChannelComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  /**
+   * function add the channel to the database
+   *
+   */
   saveChannel() {
     this.firestore
       .collection('channels')

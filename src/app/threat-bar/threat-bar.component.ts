@@ -48,6 +48,10 @@ export class ThreatBarComponent implements OnInit {
     }
   }
 
+  /**
+   * get info of the Thread
+   *
+   */
   getThread() {
     this.channelService.data$.subscribe((channelData) => {
       this.channel = channelData;
@@ -65,12 +69,20 @@ export class ThreatBarComponent implements OnInit {
     });
   }
 
+  /**
+   * function to answer in the Thread
+   *
+   */
   openAnswers() {
     this.threadService.data$.next({
       answer: this.answerMessages['answer'],
     });
   }
 
+  /**
+   * function to upload img
+   *
+   */
   async selectFile(event: any): Promise<void> {
     if (event.target.files && event.target.files[0]) {
       const reader = new FileReader();
@@ -151,6 +163,10 @@ export class ThreatBarComponent implements OnInit {
     }
   }
 
+  /**
+   * save answer into firebase(db)
+   *
+   */
   async saveAnswerToFirestore() {
     const actualTime = new Date().getTime();
     await this.firestore
@@ -189,10 +205,20 @@ export class ThreatBarComponent implements OnInit {
     this.deleteService.deleteThread();
   }
 
+  /**
+   *
+   * @param value of the input field
+   *
+   */
   setAnswer(value: any) {
     this.newAnswer.answers = value;
   }
 
+  /**
+   *
+   * @returns to close the Thread
+   *
+   */
   closeThread() {
     return (this.threadService.opened = false);
   }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { DialogAddChannelComponent } from 'src/app/dialog-add-channel/dialog-add-channel.component';
 import { Channel } from 'src/models/channel.class';
@@ -6,8 +6,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { ChannelService } from 'src/app/services/channel.service';
 import { ThreadService } from 'src/app/services/thread.service';
 import { ChatServiceService } from 'src/app/services/chat-service.service';
-import { windowWhen } from 'rxjs';
-import { MatDrawer } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-channel-box',
@@ -36,10 +34,19 @@ export class ChannelBoxComponent implements OnInit {
       });
   }
 
+  /**
+   * open dialog to add Channel
+   *
+   */
   openDialog() {
     this.dialog.open(DialogAddChannelComponent);
   }
 
+  /**
+   *
+   * @param i channel id
+   * @returns boolean for responsive Navbar
+   */
   openChannel(i) {
     this.chatService.pm = false;
     this.channelService.data$.next({

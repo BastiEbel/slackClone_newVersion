@@ -20,6 +20,10 @@ export class ThreadService {
     private firestore: AngularFirestore
   ) {}
 
+  /**
+   * function show the question and get answer
+   *
+   */
   getQuestion() {
     this.channelService.data$.subscribe((channelData) => {
       this.channel = channelData;

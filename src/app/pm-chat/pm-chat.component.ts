@@ -59,6 +59,10 @@ export class PmChatComponent implements OnInit {
     this.chatService.personalMessage.pmQuestion = value;
   }
 
+  /**
+   * this function delete the personal message
+   * @param i message id
+   */
   deletePM(i) {
     this.chatService.deletePM$.next({
       messageUID: this.chatService.pmQuestions[i]['messageUID'],

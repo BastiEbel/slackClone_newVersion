@@ -15,7 +15,7 @@ import { User } from 'src/models/user';
   providedIn: 'root',
 })
 export class AuthService {
-  login = true; //TODO auf false setzen bevor ich deploy
+  login = false;
   user: any = [];
   currentUser$ = authState(this._auth);
 
@@ -55,11 +55,20 @@ export class AuthService {
     );
   }
 
+  /**
+   *
+   * @returns delete user
+   *
+   */
   deleteAcc() {
     const user = this._auth.currentUser;
     return user.delete();
   }
 
+  /**
+   *
+   * @returns logout the user
+   */
   logout() {
     return from(this._auth.signOut());
   }

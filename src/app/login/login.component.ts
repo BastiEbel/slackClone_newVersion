@@ -114,7 +114,6 @@ export class LoginComponent implements OnInit {
    *
    */
   onSignUp() {
-    //this.checkPasswords;
     this.loading = true;
 
     if (!this.signUpForm.valid) {

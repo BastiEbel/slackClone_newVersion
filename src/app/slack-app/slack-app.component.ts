@@ -27,6 +27,11 @@ export class SlackAppComponent implements OnInit, AfterViewInit {
 
   @ViewChild('thread') thread: MatDrawer;
 
+  /**
+   * it is important for the responsive SideNav
+   * @param event to change the size
+   *
+   */
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     if (event.target.innerWidth < '600') {
@@ -72,18 +77,35 @@ export class SlackAppComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /**
+   * open the Dialog for the Profil Component
+   *
+   */
   openDialog(): void {
     this.dialog.open(ProfilComponent);
   }
 
+  /**
+   *
+   * @returns the boolean for the responsive SideNav
+   *
+   */
   openSidebar() {
     return (this.chatService.opened = true), this.chatService.sideNav;
   }
 
+  /**
+   * open the dialog for the question want you delete the User.
+   *
+   */
   deleteDialog() {
     this.dialog.open(DeleteDialogComponent);
   }
 
+  /**
+   * this is to logout the User
+   *
+   */
   logOut() {
     this.authService.logout();
     this.router.navigate(['/login']);

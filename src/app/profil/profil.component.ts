@@ -50,6 +50,11 @@ export class ProfilComponent implements OnInit {
       });
   }
 
+  /**
+   *
+   * @param event
+   * @param user upload image from the user to the database
+   */
   uploadImage(event: any, user: User) {
     this.imageUploadService
       .uploadImage(event.target.files[0], `${user.uid}`)
@@ -66,6 +71,10 @@ export class ProfilComponent implements OnInit {
       .subscribe();
   }
 
+  /**
+   * this function save the information into the database
+   *
+   */
   saveProfile() {
     const profileData = this.profileForm.value;
     this.profilService
