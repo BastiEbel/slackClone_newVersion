@@ -44,9 +44,13 @@ export class UserBoxComponent implements OnInit {
       displayName: this.allUsers[i]['displayName'],
       uID: this.allUsers[i]['uid'],
     });
-    return (
-      (this.threadService.opened = false), (this.chatService.opened = false)
-    );
+
+    if (window.innerWidth < 600) {
+      this.chatService.opened = false;
+    } else {
+      this.chatService.opened = true;
+    }
+    return (this.threadService.opened = false), this.chatService.opened;
   }
 
   /**

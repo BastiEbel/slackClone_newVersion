@@ -54,9 +54,13 @@ export class ChannelBoxComponent implements OnInit {
       channelId: this.allChannels[i]['customIdChannel'],
     });
 
-    return (
-      (this.threadService.opened = false), (this.chatService.opened = false)
-    );
+    if (window.innerWidth < 600) {
+      this.chatService.opened = false;
+    } else {
+      this.chatService.opened = true;
+    }
+
+    return (this.threadService.opened = false), this.chatService.opened;
   }
 
   seeDropdown() {
